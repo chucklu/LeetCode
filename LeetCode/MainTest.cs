@@ -1,28 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Xunit;
+using Xunit.Abstractions;
 
 namespace LeetCode
 {
-    public class ListNode
+    public class Test:BaseTest
     {
-        public int val;
-        public ListNode next;
-        public ListNode(int x) { val = x; }
-    }
-
-    public class Solution
-    {
-        public int NumComponents(ListNode head, int[] G)
+        public Test(ITestOutputHelper helper) : base(helper)
         {
-            int result = 0;
-            return result;
         }
-    }
 
-    class MainTest
-    {
+        /// <summary>
+        /// https://leetcode.com/problems/container-with-most-water/
+        /// </summary>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public int MaxArea(int[] height)
+        {
+            int max = 0;
+            for (int i = 0; i < height.Length; i++)
+            {
+                for (int j = 0; j < height.Length; j++)
+                {
+                    if (j == i)
+                    {
+                        continue;
+                    }
+                    var tempMax = height[i] * height[j];
+                    if (tempMax > max)
+                    {
+                        max = tempMax;
+                    }
+                }
+            }
+            return max;
+        }
+
+        [Fact]
+        public void Test1()
+        {
+            int[] array = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
+            int area = MaxArea(array);
+            Output.WriteLine(area.ToString());
+        }
     }
 }

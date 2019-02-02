@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace LeetCode
@@ -25,13 +26,16 @@ namespace LeetCode
                     {
                         continue;
                     }
-                    var tempMax = height[i] * height[j];
+
+                    int tempHeight = height[i] < height[j] ? height[i] : height[j];
+                    var tempMax = Math.Abs(i - j) * tempHeight;
                     if (tempMax > max)
                     {
                         max = tempMax;
                     }
                 }
             }
+
             return max;
         }
 

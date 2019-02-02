@@ -17,34 +17,49 @@ namespace LeetCode
         /// <returns></returns>
         public int MaxArea(int[] height)
         {
-            int max = 0;
-            for (int i = 0; i < height.Length; i++)
+            int maxArea = 0;
+            int left = 0;
+            int right = height.Length - 1;
+            while (left < right)
             {
-                for (int j = 0; j < height.Length; j++)
+                int width = right - left;
+                int tempheight = Math.Min(height[left],height[right]);
+                int tempMaxArea = width * tempheight;
+                maxArea = Math.Max(maxArea, tempMaxArea);
+                if (height[left] < height[right])
                 {
-                    if (j == i)
-                    {
-                        continue;
-                    }
-
-                    int tempHeight = height[i] < height[j] ? height[i] : height[j];
-                    var tempMax = Math.Abs(i - j) * tempHeight;
-                    if (tempMax > max)
-                    {
-                        max = tempMax;
-                    }
+                    left++;
+                }
+                else
+                {
+                    right--;
                 }
             }
-
-            return max;
+            return maxArea;
         }
 
         [Fact]
         public void Test1()
         {
-            int[] array = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
-            int area = MaxArea(array);
-            Output.WriteLine(area.ToString());
+            try
+            {
+                int[] array = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+                int area = MaxArea(array);
+                Output.WriteLine(area.ToString());
+
+                array = new int[] { 3, 1, 2, 4, 5 };
+                area = MaxArea(array);
+                Output.WriteLine(area.ToString());
+
+                array = new int[] { 1, 5, 4, 3 };
+                area = MaxArea(array);
+                Output.WriteLine(area.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                Output.WriteLine(ex.ToString());
+            }
         }
     }
 }

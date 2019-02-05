@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -13,37 +14,30 @@ namespace LeetCode
         {
         }
 
-        //https://leetcode.com/problems/two-sum/
-        public int[] TwoSum(int[] nums, int target)
+        //https://leetcode.com/problems/valid-palindrome/
+        public bool IsPalindrome(string s)
         {
-            List<Tuple<int, int>> list = new List<Tuple<int, int>>();
-            for (int i = 0; i < nums.Length; i++)
+            var pattern = "[a-z0-9]+";
+            s = s.ToLowerInvariant();
+            Regex regex = new Regex(pattern);
+            var array = regex.Matches(s).Cast<Match>().Select(x => x.Value).ToArray();
+            s = string.Join(string.Empty, array);
+            int i = 0;
+            int j = s.Length - 1;
+            bool result = true;
+            while (i < j)
             {
-                list.Add(new Tuple<int, int>(i, nums[i]));
-            }
-
-            list.Sort((a, b) => a.Item2.CompareTo(b.Item2));
-            int headerIndex = 0;
-            int tailIndex = nums.Length - 1;
-            while (headerIndex < tailIndex)
-            {
-                if (list[headerIndex].Item2 + list[tailIndex].Item2 == target)
+                if (s[i] == s[j])
                 {
-                    break;
-                }
-                else if (list[headerIndex].Item2 + list[tailIndex].Item2 > target)
-                {
-                    tailIndex--;
+                    i++;
+                    j--;
                 }
                 else
                 {
-                    headerIndex++;
+                    result = false;
+                    break;
                 }
             }
-
-            int[] result = new int[2];
-            result[0] = list[headerIndex].Item1;
-            result[1] = list[tailIndex].Item1;
             return result;
         }
 
@@ -52,7 +46,8 @@ namespace LeetCode
         {
             try
             {
-
+                var str = "A man, a plan, a canal: Panama";
+                IsPalindrome(str);
             }
             catch (Exception ex)
             {

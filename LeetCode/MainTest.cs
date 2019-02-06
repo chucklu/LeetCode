@@ -17,16 +17,35 @@ namespace LeetCode
         //https://leetcode.com/problems/valid-palindrome/
         public bool IsPalindrome(string s)
         {
-            var pattern = "[a-z0-9]+";
+            string temp = "abcdefghijklmnopqrstuvwxyz0123456789";
             s = s.ToLowerInvariant();
-            Regex regex = new Regex(pattern);
-            var array = regex.Matches(s).Cast<Match>().Select(x => x.Value).ToArray();
-            s = string.Join(string.Empty, array);
             int i = 0;
             int j = s.Length - 1;
             bool result = true;
             while (i < j)
             {
+                while (i < j)
+                {
+                    if (!temp.Contains(s[i]))
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                while (i < j)
+                {
+                    if (!temp.Contains(s[j]))
+                    {
+                        j--;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 if (s[i] == s[j])
                 {
                     i++;
@@ -46,8 +65,9 @@ namespace LeetCode
         {
             try
             {
-                var str = "A man, a plan, a canal: Panama";
-                IsPalindrome(str);
+                var str = "0P";
+                bool flag = IsPalindrome(str);
+                Output.WriteLine(flag.ToString());
             }
             catch (Exception ex)
             {

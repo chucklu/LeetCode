@@ -59,15 +59,8 @@ namespace LeetCode
             }
 
             list.Add(node.val);
-
-            if (node.left != null)
-            {
-                IterateBinaryTree(node.left, list);
-            }
-            if (node.right != null)
-            {
-                IterateBinaryTree(node.right, list);
-            }
+            IterateBinaryTree(node.left, list);
+            IterateBinaryTree(node.right, list);
         }
 
         [Fact]

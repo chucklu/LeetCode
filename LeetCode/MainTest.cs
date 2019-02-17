@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,60 +10,36 @@ namespace LeetCode
         {
         }
 
-        //https://leetcode.com/problems/remove-duplicates-from-sorted-array/
-        public int RemoveDuplicates(int[] nums)
+        //https://leetcode.com/problems/remove-element/
+        public int RemoveElement(int[] nums, int val)
         {
-            if (nums == null)
-            {
-                return 0;
-            }
-            if (nums.Length == 0)
-            {
-                return 0;
-            }
-            if (nums.Length == 1)
-            {
-                return 1;
-            }
-
             int i = 0;
-            int j = i + 1;
-            while (j < nums.Length)
+            int j = nums.Length - 1;
+            while (i <= j)
             {
-                if (nums[i] == nums[j])
+                if (nums[i] != val)
                 {
-                    j++;
-                    if (j >= nums.Length)
-                    {
-                        break;
-                    }
+                    i++;
                 }
                 else
                 {
-                    i++;
-                    if (i >= nums.Length)
-                    {
-                        break;
-                    }
-                    if (j >= nums.Length)
-                    {
-                        break;
-                    }
+                    //in this case,i is not added
+                    //in next loop, it will check value nums[j], which was set to nums[i]
                     nums[i] = nums[j];
-                    j++;
+                    j--;
                 }
             }
 
-            return i + 1;
+            return j + 1;
         }
-        
+
         [Fact]
         public void Test1()
         {
             try
             {
-                int[] array = {1, 1,};
-                var result = RemoveDuplicates(array);
+                int[] array = { 1};
+                var result = RemoveElement(array,1);
                 Output.WriteLine(result.ToString());
             }
             catch (Exception ex)

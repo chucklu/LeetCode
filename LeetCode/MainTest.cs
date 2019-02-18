@@ -4,33 +4,47 @@ using Xunit.Abstractions;
 
 namespace LeetCode
 {
+    //https://leetcode.com/problems/merge-sorted-array/
+    //https://www.geeksforgeeks.org/merge-two-sorted-arrays/
     public class Test:BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        //https://leetcode.com/problems/remove-element/
-        public int RemoveElement(int[] nums, int val)
+        public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
-            int i = 0;
-            int j = nums.Length - 1;
-            while (i <= j)
+            int i = m - 1;
+            int j = n - 1;
+            int k = m + n - 1;
+            while (i >= 0 && j >= 0)
             {
-                if (nums[i] != val)
+                if (nums1[i] > nums2[j])
                 {
-                    i++;
+                    nums1[k] = nums1[i];
+                    i--;
                 }
                 else
                 {
-                    //in this case,i is not added
-                    //in next loop, it will check value nums[j], which was set to nums[i]
-                    nums[i] = nums[j];
+                    nums1[k] = nums2[j];
                     j--;
                 }
+
+                k--;
             }
 
-            return j + 1;
+            while (i >= 0)
+            {
+                nums1[k] = nums1[i];
+                k--;
+                i--;
+            }
+            while (j >= 0)
+            {
+                nums1[k] = nums2[j];
+                k--;
+                j--;
+            }
         }
 
         [Fact]
@@ -38,9 +52,6 @@ namespace LeetCode
         {
             try
             {
-                int[] array = { 1};
-                var result = RemoveElement(array,1);
-                Output.WriteLine(result.ToString());
             }
             catch (Exception ex)
             {

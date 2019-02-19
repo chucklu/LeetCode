@@ -4,47 +4,47 @@ using Xunit.Abstractions;
 
 namespace LeetCode
 {
-    //https://leetcode.com/problems/merge-sorted-array/
-    //https://www.geeksforgeeks.org/merge-two-sorted-arrays/
-    public class Test:BaseTest
+    public class ListNode
+    {
+        public int val;
+        public ListNode next;
+
+        public ListNode(int x)
+        {
+            val = x;
+            next = null;
+        }
+    }
+
+    //https://leetcode.com/problems/linked-list-cycle/
+    public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        /// <summary>
+        /// Floyd’s Cycle-Finding 
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public bool HasCycle(ListNode head)
         {
-            int i = m - 1;
-            int j = n - 1;
-            int k = m + n - 1;
-            while (i >= 0 && j >= 0)
+            bool flag = false;
+            var slow = head;
+            var fast = head;
+            while (slow != null && fast?.next != null)
             {
-                if (nums1[i] > nums2[j])
+                slow = slow.next;
+                fast = fast.next.next;
+                if (slow == fast)
                 {
-                    nums1[k] = nums1[i];
-                    i--;
+                    flag = true;
+                    break;
                 }
-                else
-                {
-                    nums1[k] = nums2[j];
-                    j--;
-                }
-
-                k--;
             }
 
-            while (i >= 0)
-            {
-                nums1[k] = nums1[i];
-                k--;
-                i--;
-            }
-            while (j >= 0)
-            {
-                nums1[k] = nums2[j];
-                k--;
-                j--;
-            }
+            return flag;
         }
 
         [Fact]

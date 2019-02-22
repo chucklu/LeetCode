@@ -16,35 +16,31 @@ namespace LeetCode
         }
     }
 
-    //https://leetcode.com/problems/linked-list-cycle/
+    //https://leetcode.com/problems/reverse-linked-list/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        /// <summary>
-        /// Floyd’s Cycle-Finding 
-        /// </summary>
-        /// <param name="head"></param>
-        /// <returns></returns>
-        public bool HasCycle(ListNode head)
+        public ListNode ReverseList(ListNode head)
         {
-            bool flag = false;
-            var slow = head;
-            var fast = head;
-            while (slow != null && fast?.next != null)
+            ListNode current = head;
+            ListNode next = current?.next;
+            if (next != null)
             {
-                slow = slow.next;
-                fast = fast.next.next;
-                if (slow == fast)
-                {
-                    flag = true;
-                    break;
-                }
+                head.next = null;
+            }
+            while (next != null)
+            {
+                ListNode next2 = next.next;
+                next.next = current;
+
+                current = next;
+                next = next2;
             }
 
-            return flag;
+            return current;
         }
 
         [Fact]

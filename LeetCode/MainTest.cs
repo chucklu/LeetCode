@@ -15,37 +15,23 @@ namespace LeetCode
         }
     }
 
-    //https://leetcode.com/problems/move-zeroes/
+    //https://leetcode.com/problems/reverse-string/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
-
-        public void MoveZeroes(int[] nums)
+        public void ReverseString(char[] s)
         {
-            if (nums == null)
-            {
-                return;
-            }
             int i = 0;
-            int length = nums.Length - 1;
-            int counter = 0;
-            while (i < length)
+            int j = s.Length - 1;
+            while (i < j)
             {
-                if (nums[i] != 0)
-                {
-                    nums[counter] = nums[i];
-                    counter++;
-                }
-
+                var temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
                 i++;
-            }
-
-            while (counter < length)
-            {
-                nums[counter] = 0;
-                counter++;
+                j--;
             }
         }
 

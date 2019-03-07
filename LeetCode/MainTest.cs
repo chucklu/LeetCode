@@ -16,62 +16,29 @@ namespace LeetCode
         }
     }
 
-    //https://leetcode.com/problems/merge-two-sorted-lists/
+    //https://leetcode.com/problems/remove-duplicates-from-sorted-list/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        public ListNode DeleteDuplicates(ListNode head)
         {
-            ListNode current1Prev = null;
-            ListNode current2Next;
-            ListNode head;
-            if (l1 == null)
+            ListNode node1 = head;
+            ListNode node2 = node1?.next;
+            while (node2 != null)
             {
-                return l2;
-            }
-
-            if (l2 == null)
-            {
-                return l1;
-            }
-
-            ListNode current1;
-            ListNode current2;
-            if (l1.val <= l2.val)
-            {
-                current1 = l1;
-                current2 = l2;
-            }
-            else
-            {
-                current1 = l2;
-                current2 = l1;
-            }
-
-            head = current1;
-            while (current1 != null && current2 != null)
-            {
-                if (current1.val <= current2.val)
+                if (node2.val == node1.val)
                 {
-                    current1Prev = current1;
-                    current1 = current1.next;
+                    node1.next = node2.next;
+                    node2 = node1.next;
                 }
                 else
                 {
-                    current1Prev.next = current2;
-                    current1Prev = current2;
-                    current2Next = current2.next;
-                    current2.next = current1;
-                    current2 = current2Next;
+                    node1 = node2;
+                    node2 = node2.next;
                 }
-            }
-
-            if (current1 == null)
-            {
-                current1Prev.next = current2;
             }
 
             return head;
@@ -82,38 +49,6 @@ namespace LeetCode
         {
             try
             {
-                ListNode lista1 = new ListNode(-10);
-                ListNode lista2 = new ListNode(-9);
-                lista1.next = lista2;
-                ListNode lista3 = new ListNode(-6);
-                lista2.next = lista3;
-                ListNode lista4 = new ListNode(-4);
-                lista3.next = lista4;
-                ListNode lista5 = new ListNode(1);
-                lista4.next = lista5;
-                ListNode lista6 = new ListNode(9);
-                lista5.next = lista6;
-                ListNode lista7 = new ListNode(9);
-                lista6.next = lista7;
-
-                ListNode listb1 = new ListNode(-5);
-                ListNode listb2 = new ListNode(-3);
-                listb1.next = listb2;
-                ListNode listb3 = new ListNode(0);
-                listb2.next = listb3;
-                ListNode listb4 = new ListNode(7);
-                listb3.next = listb4;
-                ListNode listb5 = new ListNode(8);
-                listb4.next = listb5;
-                ListNode listb6 = new ListNode(8);
-                listb5.next = listb6;
-
-                var list = MergeTwoLists(lista1, listb1);
-                while (list != null)
-                {
-                    Output.WriteLine(list.val.ToString());
-                    list = list.next;
-                }
             }
             catch (Exception ex)
             {

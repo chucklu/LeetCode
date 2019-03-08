@@ -16,7 +16,7 @@ namespace LeetCode
         }
     }
 
-    //https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+    //https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
@@ -25,23 +25,43 @@ namespace LeetCode
 
         public ListNode DeleteDuplicates(ListNode head)
         {
-            ListNode node1 = head;
-            ListNode node2 = node1?.next;
+            if (head == null)
+            {
+                return null;
+            }
+            ListNode myHead = new ListNode(head.val + 1);
+            myHead.next = head;
+            ListNode node1 = myHead;
+            ListNode node2 = node1.next;
+            ListNode node1Prev = myHead;
             while (node2 != null)
             {
-                if (node2.val == node1.val)
+                if (node1.val == node2.val)
                 {
-                    node1.next = node2.next;
-                    node2 = node1.next;
+                    Remove(node1Prev, node1);
+                    node1 = node1Prev.next;
+                    node2 = node1?.next;
                 }
                 else
                 {
+                    node1Prev = node1;
                     node1 = node2;
-                    node2 = node2.next;
+                    node2 = node1.next;
                 }
             }
 
-            return head;
+            return myHead.next;
+        }
+
+        private static void Remove(ListNode nodePrev, ListNode node)
+        {
+            int val = node.val;
+            while (node != null && node.val == val)
+            {
+                node = node.next;
+            }
+
+            nodePrev.next = node;
         }
 
         [Fact]

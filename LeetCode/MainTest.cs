@@ -16,34 +16,24 @@ namespace LeetCode
         }
     }
 
-    //https://leetcode.com/problems/remove-linked-list-elements/
+    //https://leetcode.com/problems/delete-node-in-a-linked-list/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public ListNode RemoveElements(ListNode head, int val)
+        public void DeleteNode(ListNode node)
         {
-            ListNode myHead = new ListNode(0);
-            myHead.next = head;
-            ListNode current = head;
-            ListNode currentPrev = myHead;
-            while (current != null)
+            ListNode nodePrev = node;
+            while (node.next != null)
             {
-                if (current.val == val)
-                {
-                    current = current.next;
-                    currentPrev.next = current;
-                }
-                else
-                {
-                    currentPrev = current;
-                    current = current.next;
-                }
+                node.val = node.next.val;
+                nodePrev = node;
+                node = node.next;
             }
 
-            return myHead.next;
+            nodePrev.next = null;
         }
 
         [Fact]

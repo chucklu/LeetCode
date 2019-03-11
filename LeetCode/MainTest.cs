@@ -16,24 +16,27 @@ namespace LeetCode
         }
     }
 
-    //https://leetcode.com/problems/delete-node-in-a-linked-list/
+    //https://leetcode.com/problems/middle-of-the-linked-list/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public void DeleteNode(ListNode node)
+        public ListNode MiddleNode(ListNode head)
         {
-            ListNode nodePrev = node;
-            while (node.next != null)
+            var slow = head;
+            var fast = head;
+            // Get the middle of the list.
+            // Move slow by 1 and fast by 2
+            // slow will have the middle mode
+            while (fast?.next != null)
             {
-                node.val = node.next.val;
-                nodePrev = node;
-                node = node.next;
+                fast = fast.next.next;
+                slow = slow.next;
             }
 
-            nodePrev.next = null;
+            return slow;
         }
 
         [Fact]

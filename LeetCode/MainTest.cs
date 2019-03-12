@@ -5,16 +5,6 @@ using Xunit.Abstractions;
 
 namespace LeetCode
 {
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
-
-        public ListNode(int x)
-        {
-            val = x;
-        }
-    }
 
     //https://leetcode.com/problems/middle-of-the-linked-list/
     public class Test : BaseTest

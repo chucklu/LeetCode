@@ -1,32 +1,41 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/middle-of-the-linked-list/
+    //https://leetcode.com/problems/same-tree/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public ListNode MiddleNode(ListNode head)
+        public bool IsSameTree(TreeNode p, TreeNode q)
         {
-            var slow = head;
-            var fast = head;
-            // Get the middle of the list.
-            // Move slow by 1 and fast by 2
-            // slow will have the middle mode
-            while (fast?.next != null)
+            bool flag;
+            if (p == null && q == null)
             {
-                fast = fast.next.next;
-                slow = slow.next;
+                flag = true;
             }
+            else if (p == null || q == null)
+            {
+                flag = false;
+            }
+            else
+            {
+                if (p.val == q.val)
+                {
+                    flag = IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
+                }
+                else
+                {
+                    flag = false;
+                }
 
-            return slow;
+            }
+            return flag;
         }
 
         [Fact]

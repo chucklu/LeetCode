@@ -5,36 +5,41 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/same-tree/
+    //https://leetcode.com/problems/symmetric-tree/
     public class Test : BaseTest
     {
         public Test(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public bool IsSameTree(TreeNode p, TreeNode q)
+        public bool IsSymmetric(TreeNode root)
+        {
+            return IsMirror(root?.left, root?.right);
+        }
+
+        public bool IsMirror(TreeNode left, TreeNode right)
         {
             bool flag;
-            if (p == null && q == null)
+            if (left == null && right == null)
             {
                 flag = true;
             }
-            else if (p == null || q == null)
+            else if (left == null || right == null)
             {
                 flag = false;
             }
             else
             {
-                if (p.val == q.val)
+                if (left.val == right.val)
                 {
-                    flag = IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
+                    flag = IsMirror(left.left, right.right) && IsMirror(left.right, right.left);
                 }
                 else
                 {
                     flag = false;
                 }
-
             }
+
             return flag;
         }
 

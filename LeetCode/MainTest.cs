@@ -5,46 +5,38 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/symmetric-tree/
-    public class Test : BaseTest
+    //https://leetcode.com/problems/maximum-depth-of-binary-tree/
+    public class MainTest : BaseTest
     {
-        public Test(ITestOutputHelper helper) : base(helper)
+        public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public bool IsSymmetric(TreeNode root)
+        public int MaxDepth(TreeNode root)
         {
-            return IsMirror(root?.left, root?.right);
-        }
-
-        public bool IsMirror(TreeNode left, TreeNode right)
-        {
-            bool flag;
-            if (left == null && right == null)
+            int depth;
+            if (root == null)
             {
-                flag = true;
-            }
-            else if (left == null || right == null)
-            {
-                flag = false;
+                depth = 0;
             }
             else
             {
-                if (left.val == right.val)
+                depth = 1;
+                TreeNode left = root.left;
+                TreeNode right = root.right;
+                if (left != null || right != null)
                 {
-                    flag = IsMirror(left.left, right.right) && IsMirror(left.right, right.left);
-                }
-                else
-                {
-                    flag = false;
+                    int leftDepth = MaxDepth(left);
+                    int rightDepth = MaxDepth(right);
+                    depth = depth + Math.Max(leftDepth, rightDepth);
                 }
             }
 
-            return flag;
+            return depth;
         }
 
         [Fact]
-        public void Test1()
+        public void Test()
         {
             try
             {

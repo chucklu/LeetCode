@@ -10,40 +10,57 @@ namespace LeetCode
     //https://leetcode.com/problems/binary-tree-level-order-traversal/
     public class MainTest : BaseTest
     {
-        private readonly List<Tuple<int, int>> _list = new List<Tuple<int, int>>();
-
-        private int _maxDepth;
-
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
         public IList<IList<int>> LevelOrder(TreeNode root)
         {
+            IList<int> list = new List<int>();
             IList<IList<int>> result = new List<IList<int>>();
-            GetAllNodes(root, 0);
-            for (int i = 1; i <= _maxDepth; i++)
+            result.Add(list);
+
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            Enqueue(queue, root);
+            queue.Enqueue(null);
+            while (queue.Count > 0)
             {
-                var temp = _list.Where(x => x.Item1 == i).Select(y => y.Item2).ToList();
-                result.Add(temp);
+                var node = queue.Dequeue();
+
+                if (node == null)
+                {
+                    queue.Enqueue(null);
+                    if (queue.Peek() == null)
+                    {
+                        //You are encountering two consecutive `nulls` means, you visited all the nodes.
+                        break;
+                    }
+                    else
+                    {
+                        list = new List<int>();
+                        result.Add(list);
+                        continue;
+                    }
+                }
+                else
+                {
+                    list.Add(node.val);
+                }
+
+                Output.WriteLine(node.val.ToString());
+                Enqueue(queue, node.left);
+                Enqueue(queue, node.right);
             }
 
             return result;
         }
 
-        private void GetAllNodes(TreeNode node, int depth)
+        private void Enqueue(Queue<TreeNode> tempQueue, TreeNode node)
         {
-            if (node == null)
-                return;
-            depth++;
-            if (_maxDepth < depth)
+            if (node != null)
             {
-                _maxDepth = depth;
+                tempQueue.Enqueue(node);
             }
-            WriteTreeNode(node);
-            _list.Add(new Tuple<int, int>(depth, node.val));
-            GetAllNodes(node.left, depth);
-            GetAllNodes(node.right, depth);
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -82,7 +99,7 @@ namespace LeetCode
                 TreeNode node2 = new TreeNode(2);
                 TreeNode node3 = new TreeNode(3);
                 node1.left = node2;
-                node1.right = node3;
+                //node1.right = node3;
 
                 TreeNode node4 = new TreeNode(4);
                 TreeNode node5 = new TreeNode(5);

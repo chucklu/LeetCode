@@ -16,13 +16,18 @@ namespace LeetCode
 
         public IList<IList<int>> LevelOrder(TreeNode root)
         {
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+
             IList<int> list = new List<int>();
             IList<IList<int>> result = new List<IList<int>>();
-            result.Add(list);
 
-            Queue<TreeNode> queue = new Queue<TreeNode>();
-            Enqueue(queue, root);
-            queue.Enqueue(null);
+            if (root != null)
+            {
+                result.Add(list);
+                Enqueue(queue, root);
+                queue.Enqueue(null);
+            }
+
             while (queue.Count > 0)
             {
                 var node = queue.Dequeue();

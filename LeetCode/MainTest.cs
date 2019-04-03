@@ -7,14 +7,14 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/binary-tree-level-order-traversal/
+    //https://leetcode.com/problems/binary-tree-level-order-traversal-ii
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public IList<IList<int>> LevelOrder(TreeNode root)
+        public IList<IList<int>> LevelOrderBottom(TreeNode root)
         {
             Queue<TreeNode> queue = new Queue<TreeNode>();
 
@@ -57,6 +57,7 @@ namespace LeetCode
                 Enqueue(queue, node.right);
             }
 
+            result = result.Reverse().ToList();
             return result;
         }
 
@@ -111,7 +112,7 @@ namespace LeetCode
                 node2.left = node4;
                 node2.right = node5;
 
-                LevelOrder(node1);
+                LevelOrderBottom(node1);
 
             }
             catch (Exception ex)

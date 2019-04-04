@@ -1,72 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/binary-tree-level-order-traversal-ii
+    //https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public IList<IList<int>> LevelOrderBottom(TreeNode root)
+        public TreeNode SortedArrayToBST(int[] nums)
         {
-            Queue<TreeNode> queue = new Queue<TreeNode>();
-
-            IList<int> list = new List<int>();
-            IList<IList<int>> result = new List<IList<int>>();
-
-            if (root != null)
-            {
-                result.Add(list);
-                Enqueue(queue, root);
-                queue.Enqueue(null);
-            }
-
-            while (queue.Count > 0)
-            {
-                var node = queue.Dequeue();
-
-                if (node == null)
-                {
-                    queue.Enqueue(null);
-                    if (queue.Peek() == null)
-                    {
-                        //You are encountering two consecutive `nulls` means, you visited all the nodes.
-                        break;
-                    }
-                    else
-                    {
-                        list = new List<int>();
-                        result.Add(list);
-                        continue;
-                    }
-                }
-                else
-                {
-                    list.Add(node.val);
-                }
-
-                Output.WriteLine(node.val.ToString());
-                Enqueue(queue, node.left);
-                Enqueue(queue, node.right);
-            }
-
-            result = result.Reverse().ToList();
-            return result;
+            return SortedArrayToBST(nums, 0, nums.Length - 1);
         }
 
-        private void Enqueue(Queue<TreeNode> tempQueue, TreeNode node)
+        public TreeNode SortedArrayToBST(int[] arr, int start, int end)
         {
-            if (node != null)
+            if (start > end)
             {
-                tempQueue.Enqueue(node);
+                return null;
             }
+
+            int mid = (start + end) / 2;
+            TreeNode node = new TreeNode(arr[mid]);
+            node.left = SortedArrayToBST(arr, start, mid - 1);
+            node.right = SortedArrayToBST(arr, mid + 1, end);
+            return node;
         }
 
         private void WriteTreeNode(TreeNode node)

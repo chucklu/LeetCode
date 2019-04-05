@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace LeetCode
 {
@@ -34,27 +34,39 @@ namespace LeetCode
 
         private void WriteTreeNode(TreeNode node)
         {
+            StringBuilder stringBuilder=new StringBuilder();
             if (node == null)
             {
-                Console.WriteLine("node is null");
+                Output.WriteLine("node is null");
                 return;
             }
-            Console.Write($"node is {node.val}");
+
+            stringBuilder.Append($"node is {node.val}");
             if (node.left == null)
             {
-                Console.Write(", node.left is null");
+                stringBuilder.Append(", node.left is null");
             }
             else
             {
-                Console.Write($", node.left is {node.left.val}");
+                stringBuilder.Append($", node.left is {node.left.val}");
             }
             if (node.right == null)
             {
-                Console.WriteLine(", node.right is null");
+                stringBuilder.Append(", node.right is null");
             }
             else
             {
-                Console.WriteLine($", node.right is {node.right.val}");
+                stringBuilder.Append($", node.right is {node.right.val}");
+            }
+            Output.WriteLine(stringBuilder.ToString());
+
+            if (node.left != null)
+            {
+                WriteTreeNode(node.left);
+            }
+            if (node.right != null)
+            {
+                WriteTreeNode(node.right);
             }
         }
 
@@ -63,20 +75,9 @@ namespace LeetCode
         {
             try
             {
-
-                TreeNode node1 = new TreeNode(1);
-                TreeNode node2 = new TreeNode(2);
-                TreeNode node3 = new TreeNode(3);
-                node1.left = node2;
-                //node1.right = node3;
-
-                TreeNode node4 = new TreeNode(4);
-                TreeNode node5 = new TreeNode(5);
-                node2.left = node4;
-                node2.right = node5;
-
-                LevelOrderBottom(node1);
-
+                int[] array = new[] {-10, -3, 0, 5, 9};
+                TreeNode root = SortedArrayToBST(array);
+                WriteTreeNode(root);
             }
             catch (Exception ex)
             {

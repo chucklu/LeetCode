@@ -6,30 +6,44 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
+    //https://leetcode.com/problems/minimum-depth-of-binary-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public TreeNode SortedArrayToBST(int[] nums)
+        public int MinDepth(TreeNode root)
         {
-            return SortedArrayToBST(nums, 0, nums.Length - 1);
-        }
-
-        public TreeNode SortedArrayToBST(int[] arr, int start, int end)
-        {
-            if (start > end)
+            if (root == null)
             {
-                return null;
+                return 0;
             }
 
-            int mid = (start + end) / 2;
-            TreeNode node = new TreeNode(arr[mid]);
-            node.left = SortedArrayToBST(arr, start, mid - 1);
-            node.right = SortedArrayToBST(arr, mid + 1, end);
-            return node;
+            TreeNode left = root.left;
+            TreeNode right = root.right;
+            if (left == null && right == null)
+            {
+                return 1;
+            }
+
+            int depth;
+            if (left != null && right != null)
+            {
+                int leftDepth = MinDepth(left);
+                int rightDepth = MinDepth(right);
+                depth = Math.Min(leftDepth, rightDepth);
+            }
+            else if (left != null)
+            {
+                depth = MinDepth(left);
+            }
+            else
+            {
+                depth = MinDepth(right);
+            }
+
+            return depth + 1;
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -75,9 +89,20 @@ namespace LeetCode
         {
             try
             {
-                int[] array = new[] {-10, -3, 0, 5, 9};
-                TreeNode root = SortedArrayToBST(array);
-                WriteTreeNode(root);
+                TreeNode node1 = new TreeNode(3);
+                TreeNode node2 = new TreeNode(9);
+                TreeNode node3 = new TreeNode(20);
+                //node1.left = node2;
+                node1.right = node3;
+
+                TreeNode node4 = new TreeNode(15);
+                TreeNode node5 = new TreeNode(17);
+                node3.left = node4;
+                node3.right = node5;
+
+                int minDepth = MinDepth(node1);
+                Output.WriteLine(minDepth.ToString());
+
             }
             catch (Exception ex)
             {

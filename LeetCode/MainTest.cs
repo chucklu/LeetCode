@@ -22,28 +22,20 @@ namespace LeetCode
 
             TreeNode left = root.left;
             TreeNode right = root.right;
-            if (left == null && right == null)
+
+            if (left == null)
             {
-                return 1;
+                return MinDepth(right) + 1;
             }
 
-            int depth;
-            if (left != null && right != null)
+            if (right == null)
             {
-                int leftDepth = MinDepth(left);
-                int rightDepth = MinDepth(right);
-                depth = Math.Min(leftDepth, rightDepth);
-            }
-            else if (left != null)
-            {
-                depth = MinDepth(left);
-            }
-            else
-            {
-                depth = MinDepth(right);
+                return MinDepth(left) + 1;
             }
 
-            return depth + 1;
+            int leftDepth = MinDepth(left);
+            int rightDepth = MinDepth(right);
+            return Math.Min(leftDepth, rightDepth) + 1;
         }
 
         private void WriteTreeNode(TreeNode node)

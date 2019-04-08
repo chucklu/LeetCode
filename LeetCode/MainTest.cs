@@ -6,36 +6,48 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/minimum-depth-of-binary-tree/
+    //https://leetcode.com/problems/balanced-binary-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public int MinDepth(TreeNode root)
+        public bool IsBalanced(TreeNode root)
         {
             if (root == null)
             {
-                return 0;
+                return true;
             }
+            int maxLeftDepth = MaxDepth(root.left);
+            int maxRightDepth = MaxDepth(root.right);
+            bool flag1 = Math.Abs(maxLeftDepth - maxRightDepth) <= 1;
+            bool flag2 = IsBalanced(root.left);
+            bool flag3 = IsBalanced(root.right);
+            return flag1 && flag2 && flag3;
+        }
 
-            TreeNode left = root.left;
-            TreeNode right = root.right;
-
-            if (left == null)
+        public int MaxDepth(TreeNode root)
+        {
+            int depth;
+            if (root == null)
             {
-                return MinDepth(right) + 1;
+                depth = 0;
             }
-
-            if (right == null)
+            else
             {
-                return MinDepth(left) + 1;
+                depth = 1;
+                TreeNode left = root.left;
+                TreeNode right = root.right;
+                if (left != null || right != null)
+                {
+                    int leftDepth = MaxDepth(left);
+                    int rightDepth = MaxDepth(right);
+                    depth = depth + Math.Max(leftDepth, rightDepth);
+                }
             }
 
-            int leftDepth = MinDepth(left);
-            int rightDepth = MinDepth(right);
-            return Math.Min(leftDepth, rightDepth) + 1;
+            return depth;
         }
 
         private void WriteTreeNode(TreeNode node)

@@ -6,48 +6,54 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/balanced-binary-tree/
+    //https://leetcode.com/problems/path-sum/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public bool IsBalanced(TreeNode root)
+        public bool HasPathSum(TreeNode root, int sum)
         {
             if (root == null)
             {
-                return true;
+                return false;
             }
-            int maxLeftDepth = MaxDepth(root.left);
-            int maxRightDepth = MaxDepth(root.right);
-            bool flag1 = Math.Abs(maxLeftDepth - maxRightDepth) <= 1;
-            bool flag2 = IsBalanced(root.left);
-            bool flag3 = IsBalanced(root.right);
-            return flag1 && flag2 && flag3;
+            return Sum(root, sum, 0);
         }
 
-        public int MaxDepth(TreeNode root)
+        public bool Sum(TreeNode node, int target, int tempSum)
         {
-            int depth;
-            if (root == null)
+            tempSum = tempSum + node.val;
+            var left = node.left;
+            var right = node.right;
+            if (left == null && right == null)
             {
-                depth = 0;
+                return tempSum == target;
             }
-            else
+            else if (left != null && right == null)
             {
-                depth = 1;
-                TreeNode left = root.left;
-                TreeNode right = root.right;
-                if (left != null || right != null)
+                return Sum(left, target, tempSum);
+            }
+            else if (left == null && right != null)
+            {
+                return Sum(right, target, tempSum);
+            }
+            else if (left != null && right != null)
+            {
+                bool flag1 = Sum(left, target, tempSum);
+                if (flag1)
                 {
-                    int leftDepth = MaxDepth(left);
-                    int rightDepth = MaxDepth(right);
-                    depth = depth + Math.Max(leftDepth, rightDepth);
+                    return true;
+                }
+                bool flag2 = Sum(right, target, tempSum);
+                if (!flag2)
+                {
+                    return false;
                 }
             }
 
-            return depth;
+            return true;
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -93,19 +99,47 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(3);
-                TreeNode node2 = new TreeNode(9);
-                TreeNode node3 = new TreeNode(20);
-                //node1.left = node2;
+                TreeNode node1 = new TreeNode(5);
+                TreeNode node2 = new TreeNode(4);
+                TreeNode node3 = new TreeNode(8);
+                node1.left = node2;
                 node1.right = node3;
 
-                TreeNode node4 = new TreeNode(15);
-                TreeNode node5 = new TreeNode(17);
-                node3.left = node4;
-                node3.right = node5;
+                TreeNode node4 = new TreeNode(11);
+                TreeNode node5 = new TreeNode(13);
+                TreeNode node6 = new TreeNode(4);
+                node2.left = node4;
+                node3.left = node5;
+                node3.right = node6;
 
-                int minDepth = MinDepth(node1);
-                Output.WriteLine(minDepth.ToString());
+
+                TreeNode node7 = new TreeNode(7);
+                TreeNode node8 = new TreeNode(2);
+                TreeNode node9 = new TreeNode(1);
+                node4.left = node7;
+                node4.right = node8;
+                node6.right = node9;
+
+                bool flag = HasPathSum(node1, 22);
+                Output.WriteLine(flag.ToString());
+
+            }
+            catch (Exception ex)
+            {
+                Output.WriteLine(ex.ToString());
+            }
+        }
+
+        [Fact]
+        public void Test2()
+        {
+            try
+            {
+                TreeNode node1 = new TreeNode(-2);
+                TreeNode node2 = new TreeNode(-3);
+
+                bool flag = HasPathSum(node1, -5);
+                Output.WriteLine(flag.ToString());
 
             }
             catch (Exception ex)

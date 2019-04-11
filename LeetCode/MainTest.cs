@@ -6,54 +6,38 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/path-sum/
+    //https://leetcode.com/problems/invert-binary-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public bool HasPathSum(TreeNode root, int sum)
+        public TreeNode InvertTree(TreeNode root)
         {
             if (root == null)
             {
-                return false;
+                return null;
             }
-            return Sum(root, sum, 0);
-        }
 
-        public bool Sum(TreeNode node, int target, int tempSum)
-        {
-            tempSum = tempSum + node.val;
-            var left = node.left;
-            var right = node.right;
+            var left = root.left;
+            var right = root.right;
             if (left == null && right == null)
             {
-                return tempSum == target;
-            }
-            else if (left != null && right == null)
-            {
-                return Sum(left, target, tempSum);
-            }
-            else if (left == null && right != null)
-            {
-                return Sum(right, target, tempSum);
-            }
-            else if (left != null && right != null)
-            {
-                bool flag1 = Sum(left, target, tempSum);
-                if (flag1)
-                {
-                    return true;
-                }
-                bool flag2 = Sum(right, target, tempSum);
-                if (!flag2)
-                {
-                    return false;
-                }
+                return root;
             }
 
-            return true;
+            if (left != null)
+            {
+                root.right = InvertTree(left);
+            }
+
+            if (right != null)
+            {
+                root.left = InvertTree(right);
+            }
+
+            return root;
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -120,9 +104,6 @@ namespace LeetCode
                 node4.right = node8;
                 node6.right = node9;
 
-                bool flag = HasPathSum(node1, 22);
-                Output.WriteLine(flag.ToString());
-
             }
             catch (Exception ex)
             {
@@ -135,11 +116,7 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(-2);
-                TreeNode node2 = new TreeNode(-3);
-
-                bool flag = HasPathSum(node1, -5);
-                Output.WriteLine(flag.ToString());
+               
 
             }
             catch (Exception ex)

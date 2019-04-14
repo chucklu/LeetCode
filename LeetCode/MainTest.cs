@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -6,35 +7,48 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+    //https://leetcode.com/problems/binary-tree-paths/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        private List<string> list = new List<string>();
+        public IList<string> BinaryTreePaths(TreeNode root)
         {
-            TreeNode node;
-            if (root.val > p.val && root.val > q.val)
+            if (root == null)
             {
-                node = LowestCommonAncestor(root.left, p, q);
-            }
-            else if (root.val < p.val && root.val < q.val)
-            {
-                node = LowestCommonAncestor(root.right, p, q);
+                return null;
             }
             else
             {
-                node = root;
+                Chuck(string.Empty, root);
             }
 
-            return node;
+            return list;
+        }
+
+        private void Chuck(string str,TreeNode node)
+        {
+            if (node == null)
+            {
+                if (!string.IsNullOrEmpty(str))
+                {
+                    list.Add(str);
+                }
+            }
+            else
+            {
+                str = $"{str}-->{node.val}";
+                Chuck(str, node.left);
+                Chuck(str,node.right);
+            }
         }
 
         private void WriteTreeNode(TreeNode node)
         {
-            StringBuilder stringBuilder=new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
             if (node == null)
             {
                 Output.WriteLine("node is null");
@@ -75,30 +89,20 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(6);
+                TreeNode node1 = new TreeNode(1);
+                TreeNode node2 = new TreeNode(2);
+                TreeNode node3 = new TreeNode(3);
+                node1.left = node2;
+                node1.right = node3;
 
-                TreeNode node21 = new TreeNode(2);
-                TreeNode node22 = new TreeNode(8);
-                node1.left = node21;
-                node1.right = node22;
+                TreeNode node4 = new TreeNode(5);
+                node2.right = node4;
 
-                TreeNode node31 = new TreeNode(0);
-                TreeNode node32 = new TreeNode(4);
-                node21.left = node31;
-                node21.right = node32;
-
-                TreeNode node33 = new TreeNode(7);
-                TreeNode node34 = new TreeNode(9);
-                node22.left = node33;
-                node22.right = node34;
-
-                TreeNode node43 = new TreeNode(3);
-                TreeNode node44 = new TreeNode(5);
-                node32.left = node43;
-                node32.right = node44;
-
-                LowestCommonAncestor(node1, node21, node22);
-
+                var tempList = BinaryTreePaths(node1);
+                foreach (var item in tempList)
+                {
+                    Output.WriteLine(item);
+                }
             }
             catch (Exception ex)
             {
@@ -111,8 +115,6 @@ namespace LeetCode
         {
             try
             {
-               
-
             }
             catch (Exception ex)
             {

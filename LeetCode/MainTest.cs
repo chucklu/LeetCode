@@ -19,7 +19,7 @@ namespace LeetCode
         {
             if (root == null)
             {
-                return null;
+                return list;
             }
             else
             {
@@ -29,20 +29,30 @@ namespace LeetCode
             return list;
         }
 
-        private void Chuck(string str,TreeNode node)
+        private void Chuck(string str, TreeNode node)
         {
             if (node == null)
             {
-                if (!string.IsNullOrEmpty(str))
-                {
-                    list.Add(str);
-                }
+                return;
+            }
+
+            if (str.Equals(string.Empty))
+            {
+                str = $"{node.val}";
             }
             else
             {
-                str = $"{str}-->{node.val}";
+                str = $"{str}->{node.val}";
+            }
+
+            if (node.left == null && node.right == null)
+            {
+                list.Add(str);
+            }
+            else
+            {
                 Chuck(str, node.left);
-                Chuck(str,node.right);
+                Chuck(str, node.right);
             }
         }
 

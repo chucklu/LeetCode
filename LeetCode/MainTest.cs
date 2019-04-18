@@ -7,52 +7,34 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/binary-tree-paths/
+    //https://leetcode.com/problems/sum-of-left-leaves/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        private List<string> list = new List<string>();
-        public IList<string> BinaryTreePaths(TreeNode root)
-        {
-            if (root == null)
-            {
-                return list;
-            }
-            else
-            {
-                Chuck(string.Empty, root);
-            }
+        private int sum;
 
-            return list;
+        public int SumOfLeftLeaves(TreeNode root)
+        {
+            Chuck(root.right, false);
+            return sum;
         }
 
-        private void Chuck(string str, TreeNode node)
+        private void Chuck(TreeNode node, bool isLeft)
         {
-            if (node == null)
+            if (node.left == null && node.right == null)//leaf node
             {
-                return;
-            }
-
-            if (str.Equals(string.Empty))
-            {
-                str = $"{node.val}";
+                if (isLeft)
+                {
+                    sum = sum + node.val;
+                }
             }
             else
             {
-                str = $"{str}->{node.val}";
-            }
-
-            if (node.left == null && node.right == null)
-            {
-                list.Add(str);
-            }
-            else
-            {
-                Chuck(str, node.left);
-                Chuck(str, node.right);
+                Chuck(node.left, true);
+                Chuck(node.right, false);
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -81,20 +80,18 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(1);
-                TreeNode node2 = new TreeNode(2);
-                TreeNode node3 = new TreeNode(3);
+                TreeNode node1 = new TreeNode(3);
+                TreeNode node2 = new TreeNode(9);
+                TreeNode node3 = new TreeNode(20);
                 node1.left = node2;
                 node1.right = node3;
 
-                TreeNode node4 = new TreeNode(5);
-                node2.right = node4;
-
-                var tempList = BinaryTreePaths(node1);
-                foreach (var item in tempList)
-                {
-                    Output.WriteLine(item);
-                }
+                TreeNode node4 = new TreeNode(15);
+                TreeNode node5 = new TreeNode(7);
+                node3.left = node4;
+                node3.right = node5;
+                int tempSum = SumOfLeftLeaves(node1);
+                Output.WriteLine(tempSum.ToString());
             }
             catch (Exception ex)
             {

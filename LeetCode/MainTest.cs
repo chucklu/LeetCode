@@ -17,7 +17,10 @@ namespace LeetCode
 
         public int SumOfLeftLeaves(TreeNode root)
         {
-            Chuck(root.right, false);
+            if (root != null)
+            {
+                Chuck(root, false);
+            }
             return sum;
         }
 

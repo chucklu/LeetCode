@@ -17,15 +17,16 @@ namespace LeetCode
 
         public int SumOfLeftLeaves(TreeNode root)
         {
-            if (root != null)
-            {
-                Chuck(root, false);
-            }
+            Chuck(root, false);
             return sum;
         }
 
         private void Chuck(TreeNode node, bool isLeft)
         {
+            if (node == null)
+            {
+                return;
+            }
             if (node.left == null && node.right == null)//leaf node
             {
                 if (isLeft)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -6,38 +7,47 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/sum-of-left-leaves/
+    //https://leetcode.com/problems/path-sum-ii/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        private int sum;
+        private List<IList<int>> list = new List<IList<int>>();
 
-        public int SumOfLeftLeaves(TreeNode root)
+        public IList<IList<int>> PathSum(TreeNode root, int sum)
         {
-            Chuck(root, false);
-            return sum;
+            Chuck(root, sum, 0, null);
+            return list;
         }
 
-        private void Chuck(TreeNode node, bool isLeft)
+        private void Chuck(TreeNode node, int sum,int tempSum,List<int> tempList)
         {
             if (node == null)
             {
                 return;
             }
-            if (node.left == null && node.right == null)//leaf node
+            if (tempList == null)
             {
-                if (isLeft)
+                tempList = new List<int>();
+            }
+
+            tempSum = tempSum + node.val;
+            var left = node.left;
+            var right = node.right;
+            tempList.Add(node.val);
+            if (left == null && right == null)
+            {
+                if (tempSum == sum)
                 {
-                    sum = sum + node.val;
+                    list.Add(tempList);
                 }
             }
             else
             {
-                Chuck(node.left, true);
-                Chuck(node.right, false);
+                Chuck(left, sum, tempSum, tempList);
+                Chuck(right, sum, tempSum, tempList);
             }
         }
 
@@ -94,8 +104,8 @@ namespace LeetCode
                 TreeNode node5 = new TreeNode(7);
                 node3.left = node4;
                 node3.right = node5;
-                int tempSum = SumOfLeftLeaves(node1);
-                Output.WriteLine(tempSum.ToString());
+                //int tempSum = SumOfLeftLeaves(node1);
+                //Output.WriteLine(tempSum.ToString());
             }
             catch (Exception ex)
             {

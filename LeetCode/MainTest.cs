@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -18,36 +19,41 @@ namespace LeetCode
 
         public IList<IList<int>> PathSum(TreeNode root, int sum)
         {
-            Chuck(root, sum, 0, null);
+            Chuck(root, sum, 0, string.Empty);
             return list;
         }
 
-        private void Chuck(TreeNode node, int sum,int tempSum,List<int> tempList)
+        private void Chuck(TreeNode node, int sum, int tempSum, string str)
         {
             if (node == null)
             {
                 return;
             }
-            if (tempList == null)
-            {
-                tempList = new List<int>();
-            }
 
             tempSum = tempSum + node.val;
             var left = node.left;
             var right = node.right;
-            tempList.Add(node.val);
+            if (string.IsNullOrEmpty(str))
+            {
+                str = $"{node.val}";
+            }
+            else
+            {
+                str = $"{str},{node.val}";
+            }
+
             if (left == null && right == null)
             {
                 if (tempSum == sum)
                 {
+                    var tempList = str.Split(',').Select(x => Convert.ToInt32(x)).ToList();
                     list.Add(tempList);
                 }
             }
             else
             {
-                Chuck(left, sum, tempSum, tempList);
-                Chuck(right, sum, tempSum, tempList);
+                Chuck(left, sum, tempSum, str);
+                Chuck(right, sum, tempSum, str);
             }
         }
 

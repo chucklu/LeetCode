@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -8,53 +6,43 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/path-sum-ii/
+    //https://leetcode.com/problems/path-sum-iii/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        private List<IList<int>> list = new List<IList<int>>();
+        private int _count;
+        private int _target;
 
-        public IList<IList<int>> PathSum(TreeNode root, int sum)
+        public int PathSum(TreeNode root, int sum)
         {
-            Chuck(root, sum, 0, string.Empty);
-            return list;
+            _target = sum;
+            Chuck(root, 0);
+            Chuck(root?.left, 0);
+            Chuck(root?.right, 0);
+            return _count;
         }
 
-        private void Chuck(TreeNode node, int sum, int tempSum, string str)
+        private void Chuck(TreeNode node, int sum)
         {
             if (node == null)
             {
                 return;
             }
 
-            tempSum = tempSum + node.val;
-            var left = node.left;
-            var right = node.right;
-            if (string.IsNullOrEmpty(str))
+            sum = sum + node.val;
+            if (sum == _target)
             {
-                str = $"{node.val}";
+                _count++;
             }
-            else
+            if (node.left == null && node.right == null)
             {
-                str = $"{str},{node.val}";
+                return;
             }
-
-            if (left == null && right == null)
-            {
-                if (tempSum == sum)
-                {
-                    var tempList = str.Split(',').Select(x => Convert.ToInt32(x)).ToList();
-                    list.Add(tempList);
-                }
-            }
-            else
-            {
-                Chuck(left, sum, tempSum, str);
-                Chuck(right, sum, tempSum, str);
-            }
+            Chuck(node.left, sum);
+            Chuck(node.right, sum);
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -100,34 +88,6 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(5);
-                TreeNode node2 = new TreeNode(4);
-                TreeNode node3 = new TreeNode(8);
-                node1.left = node2;
-                node1.right = node3;
-
-                TreeNode node4 = new TreeNode(11);
-                TreeNode node5 = new TreeNode(13);
-                TreeNode node6 = new TreeNode(4);
-                node2.left = node4;
-                node3.left = node5;
-                node3.right = node6;
-
-                TreeNode node7 = new TreeNode(7);
-                TreeNode node8 = new TreeNode(2);
-                TreeNode node9 = new TreeNode(5);
-                TreeNode node10 = new TreeNode(1);
-                node4.left = node7;
-                node4.right = node8;
-                node6.left = node9;
-                node6.right = node10;
-
-                var tempList = PathSum(node1, 22);
-                foreach (var item in tempList)
-                {
-                    string str = string.Join("->", item);
-                    Output.WriteLine(str);
-                }
             }
             catch (Exception ex)
             {

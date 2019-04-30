@@ -19,10 +19,20 @@ namespace LeetCode
         public int PathSum(TreeNode root, int sum)
         {
             _target = sum;
-            Chuck(root, 0);
-            Chuck(root?.left, 0);
-            Chuck(root?.right, 0);
+            Iterate(root);
             return _count;
+        }
+
+        private void Iterate(TreeNode node)
+        {
+
+            Chuck(node, 0);
+            if (node?.left == null && node?.right == null)
+            {
+                return;
+            }
+            Iterate(node.left);
+            Iterate(node.right);
         }
 
         private void Chuck(TreeNode node, int sum)

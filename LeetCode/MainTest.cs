@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -6,53 +8,48 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/path-sum-iii/
+    //https://leetcode.com/problems/find-mode-in-binary-search-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        private int _count;
-        private int _target;
+        private readonly Dictionary<int, int> dictionary = new Dictionary<int, int>();
 
-        public int PathSum(TreeNode root, int sum)
+        public int[] FindMode(TreeNode root)
         {
-            _target = sum;
-            Iterate(root);
-            return _count;
-        }
-
-        private void Iterate(TreeNode node)
-        {
-
-            Chuck(node, 0);
-            if (node?.left == null && node?.right == null)
+            Chuck(root);
+            if (dictionary.Count > 0)
             {
-                return;
+                int max = dictionary.Max(x => x.Value);
+                var array = dictionary.Where(x => x.Value == max).Select(x => x.Key).ToArray();
+                return array;
             }
-            Iterate(node.left);
-            Iterate(node.right);
+            else
+            {
+                return new int[0];
+            }
         }
 
-        private void Chuck(TreeNode node, int sum)
+        private void Chuck(TreeNode node)
         {
             if (node == null)
             {
                 return;
             }
 
-            sum = sum + node.val;
-            if (sum == _target)
+            int val = node.val;
+            if (dictionary.ContainsKey(val))
             {
-                _count++;
+                dictionary[val]++;
             }
-            if (node.left == null && node.right == null)
+            else
             {
-                return;
+                dictionary[val] = 1;
             }
-            Chuck(node.left, sum);
-            Chuck(node.right, sum);
+            Chuck(node.left);
+            Chuck(node.right);
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -101,14 +98,11 @@ namespace LeetCode
                 TreeNode node1 = new TreeNode(1);
                 TreeNode node2 = new TreeNode(2);
                 node1.right = node2;
-                TreeNode node3 = new TreeNode(3);
-                node2.right = node3;
-                TreeNode node4 = new TreeNode(4);
-                node3.right = node4;
-                TreeNode node5 = new TreeNode(5);
-                node4.right = node5;
-                int count = PathSum(node1, 3);
-                Output.WriteLine(count.ToString());
+                TreeNode node3 = new TreeNode(2);
+                node2.left = node3;
+                var array = FindMode(node1);
+                string str = string.Join(",", array);
+                Output.WriteLine(str);
             }
             catch (Exception ex)
             {

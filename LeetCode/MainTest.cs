@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -8,45 +6,59 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/find-mode-in-binary-search-tree/
+    //https://leetcode.com/problems/minimum-absolute-difference-in-bst/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        private readonly Dictionary<int, int> dictionary = new Dictionary<int, int>();
-
-        public int[] FindMode(TreeNode root)
+        private int delta = -1;
+        public int GetMinimumDifference(TreeNode root)
         {
             Chuck(root);
-            if (dictionary.Count > 0)
-            {
-                int max = dictionary.Max(x => x.Value);
-                var array = dictionary.Where(x => x.Value == max).Select(x => x.Key).ToArray();
-                return array;
-            }
-            else
-            {
-                return new int[0];
-            }
+            return delta;
         }
 
         private void Chuck(TreeNode node)
         {
+            if (delta == 0)
+            {
+                return;
+            }
             if (node == null)
             {
                 return;
             }
-
-            int val = node.val;
-            if (dictionary.ContainsKey(val))
+            var left = node.left;
+            var right = node.right;
+            int delta1 = -1;
+            if (left != null)
             {
-                dictionary[val]++;
+                delta1 = node.val - left.val;
+            }
+
+            int delta2 = -1;
+            if (right != null)
+            {
+                delta2 = right.val - node.val;
+            }
+
+            if (delta1 == -1 && delta2 == -1)
+            {
+                return;
+            }
+            else if (delta1 != -1 && delta2 == -1)
+            {
+                delta = delta1;
+            }
+            else if (delta2 == -1 && delta2 != -1)
+            {
+                delta = delta2;
             }
             else
             {
-                dictionary[val] = 1;
+                delta = Math.Min(delta1, delta2);
             }
             Chuck(node.left);
             Chuck(node.right);
@@ -95,14 +107,6 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(1);
-                TreeNode node2 = new TreeNode(2);
-                node1.right = node2;
-                TreeNode node3 = new TreeNode(2);
-                node2.left = node3;
-                var array = FindMode(node1);
-                string str = string.Join(",", array);
-                Output.WriteLine(str);
             }
             catch (Exception ex)
             {

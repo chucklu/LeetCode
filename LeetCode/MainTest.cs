@@ -52,7 +52,7 @@ namespace LeetCode
             {
                 delta = delta1;
             }
-            else if (delta2 == -1 && delta2 != -1)
+            else if (delta1 == -1 && delta2 != -1)
             {
                 delta = delta2;
             }
@@ -107,6 +107,11 @@ namespace LeetCode
         {
             try
             {
+                TreeNode node1 = new TreeNode(1);
+                TreeNode node2 = new TreeNode(2);
+                node1.right = node2;
+                int temp = GetMinimumDifference(node1);
+                Output.WriteLine(temp.ToString());
             }
             catch (Exception ex)
             {

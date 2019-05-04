@@ -26,10 +26,12 @@ namespace LeetCode
             {
                 return;
             }
+
             if (node == null)
             {
                 return;
             }
+
             var left = node.left;
             var right = node.right;
             int delta1 = -1;
@@ -50,16 +52,32 @@ namespace LeetCode
             }
             else if (delta1 != -1 && delta2 == -1)
             {
-                delta = delta1;
+                if (delta == -1)
+                {
+                    delta = delta1;
+                }
+                else
+                {
+                    delta2 = Math.Min(delta, delta1);
+                }
             }
             else if (delta1 == -1 && delta2 != -1)
             {
-                delta = delta2;
+                if (delta == -1)
+                {
+                    delta = delta2;
+                }
+                else
+                {
+                    delta = Math.Min(delta, delta2);
+                }
             }
             else
             {
-                delta = Math.Min(delta1, delta2);
+                var temp = Math.Min(delta1, delta2);
+                delta = Math.Min(temp, delta);
             }
+
             Chuck(node.left);
             Chuck(node.right);
         }
@@ -124,6 +142,19 @@ namespace LeetCode
         {
             try
             {
+                TreeNode node1 = new TreeNode(236);
+                TreeNode node2 = new TreeNode(104);
+                TreeNode node3 = new TreeNode(701);
+                node1.left = node2;
+                node1.right = node3;
+
+                TreeNode node4 = new TreeNode(227);
+                node2.right = node4;
+                TreeNode node5 = new TreeNode(911);
+                node3.right = node5;
+
+                int temp = GetMinimumDifference(node1);
+                Output.WriteLine(temp.ToString());
             }
             catch (Exception ex)
             {

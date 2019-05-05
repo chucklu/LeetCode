@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -13,71 +15,38 @@ namespace LeetCode
         {
         }
 
-        private int delta = -1;
+        private readonly List<int> deltaList = new List<int>();
+
+        private readonly List<int> sourceList = new List<int>();
+
         public int GetMinimumDifference(TreeNode root)
         {
             Chuck(root);
-            return delta;
+            int min = deltaList.Min();
+            return min;
         }
 
         private void Chuck(TreeNode node)
         {
-            if (delta == 0)
-            {
-                return;
-            }
-
             if (node == null)
             {
                 return;
             }
 
-            var left = node.left;
-            var right = node.right;
-            int delta1 = -1;
-            if (left != null)
+            int val = node.val;
+            foreach (var item in sourceList)
             {
-                delta1 = node.val - left.val;
+                var delta = Math.Abs(item - val);
+                if (!deltaList.Contains(delta))
+                {
+                    deltaList.Add(delta);
+                }
             }
+            if (!sourceList.Contains(val))
+            {
 
-            int delta2 = -1;
-            if (right != null)
-            {
-                delta2 = right.val - node.val;
+                sourceList.Add(val);
             }
-
-            if (delta1 == -1 && delta2 == -1)
-            {
-                return;
-            }
-            else if (delta1 != -1 && delta2 == -1)
-            {
-                if (delta == -1)
-                {
-                    delta = delta1;
-                }
-                else
-                {
-                    delta2 = Math.Min(delta, delta1);
-                }
-            }
-            else if (delta1 == -1 && delta2 != -1)
-            {
-                if (delta == -1)
-                {
-                    delta = delta2;
-                }
-                else
-                {
-                    delta = Math.Min(delta, delta2);
-                }
-            }
-            else
-            {
-                var temp = Math.Min(delta1, delta2);
-                delta = Math.Min(temp, delta);
-            }
-
             Chuck(node.left);
             Chuck(node.right);
         }

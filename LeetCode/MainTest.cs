@@ -34,18 +34,21 @@ namespace LeetCode
             }
 
             int val = node.val;
-            foreach (var item in sourceList)
-            {
-                var delta = Math.Abs(item - val);
-                if (!deltaList.Contains(delta))
-                {
-                    deltaList.Add(delta);
-                }
-            }
             if (!sourceList.Contains(val))
             {
-
+                foreach (var item in sourceList)
+                {
+                    var delta = Math.Abs(item - val);
+                    if (!deltaList.Contains(delta))
+                    {
+                        deltaList.Add(delta);
+                    }
+                }
                 sourceList.Add(val);
+            }
+            else
+            {
+                deltaList.Add(0);
             }
             Chuck(node.left);
             Chuck(node.right);

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
@@ -15,43 +13,28 @@ namespace LeetCode
         {
         }
 
-        private readonly List<int> deltaList = new List<int>();
-
-        private readonly List<int> sourceList = new List<int>();
-
         public int GetMinimumDifference(TreeNode root)
         {
-            Chuck(root);
-            int min = deltaList.Min();
-            return min;
+            int res = int.MaxValue, pre = -1;
+            Chuck(root, ref pre, ref res);
+            return res;
         }
 
-        private void Chuck(TreeNode node)
+        private void Chuck(TreeNode node, ref int pre, ref int res)
         {
             if (node == null)
             {
                 return;
             }
 
-            int val = node.val;
-            if (!sourceList.Contains(val))
+            Chuck(node.left, ref pre, ref res);
+            if (pre != -1)
             {
-                foreach (var item in sourceList)
-                {
-                    var delta = Math.Abs(item - val);
-                    if (!deltaList.Contains(delta))
-                    {
-                        deltaList.Add(delta);
-                    }
-                }
-                sourceList.Add(val);
+                res = Math.Min(res, node.val - pre);
             }
-            else
-            {
-                deltaList.Add(0);
-            }
-            Chuck(node.left);
-            Chuck(node.right);
+
+            pre = node.val;
+            Chuck(node.right, ref pre, ref res);
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -98,8 +81,10 @@ namespace LeetCode
             try
             {
                 TreeNode node1 = new TreeNode(1);
-                TreeNode node2 = new TreeNode(2);
+                TreeNode node2 = new TreeNode(3);
                 node1.right = node2;
+                TreeNode node3 = new TreeNode(2);
+                node2.left = node3;
                 int temp = GetMinimumDifference(node1);
                 Output.WriteLine(temp.ToString());
             }

@@ -28,9 +28,12 @@ namespace LeetCode
             }
 
             Chuck(node.left, ref pre, ref res);
+            Output.WriteLine($"prev = {pre}");
             if (pre != -1)
             {
-                res = Math.Min(res, node.val - pre);
+                int delta = node.val - pre;
+                Output.WriteLine($"{node.val} - {pre} = {delta}");
+                res = Math.Min(res, delta);
             }
 
             pre = node.val;
@@ -80,11 +83,11 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(1);
-                TreeNode node2 = new TreeNode(3);
-                node1.right = node2;
-                TreeNode node3 = new TreeNode(2);
-                node2.left = node3;
+                TreeNode node1 = new TreeNode(5);
+                TreeNode node2 = new TreeNode(4);
+                TreeNode node3 = new TreeNode(7);
+                node1.left = node2;
+                node1.right = node3;
                 int temp = GetMinimumDifference(node1);
                 Output.WriteLine(temp.ToString());
             }

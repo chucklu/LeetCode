@@ -13,21 +13,23 @@ namespace LeetCode
         {
         }
 
+        private int pre = -1;
+
         public int GetMinimumDifference(TreeNode root)
         {
             int res = int.MaxValue, pre = -1;
-            Chuck(root, ref pre, ref res);
+            Chuck(root, ref res);
             return res;
         }
 
-        private void Chuck(TreeNode node, ref int pre, ref int res)
+        private void Chuck(TreeNode node, ref int res)
         {
             if (node == null)
             {
                 return;
             }
 
-            Chuck(node.left, ref pre, ref res);
+            Chuck(node.left, ref res);
             Output.WriteLine($"prev = {pre}");
             if (pre != -1)
             {
@@ -37,7 +39,7 @@ namespace LeetCode
             }
 
             pre = node.val;
-            Chuck(node.right, ref pre, ref res);
+            Chuck(node.right, ref res);
         }
 
         private void WriteTreeNode(TreeNode node)

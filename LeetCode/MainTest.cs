@@ -6,41 +6,48 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/minimum-absolute-difference-in-bst/
+    //https://leetcode.com/problems/intersection-of-two-linked-lists/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        private int pre = -1;
-
-        private int res = int.MaxValue;
-
-        public int GetMinimumDifference(TreeNode root)
+        public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
         {
-            Chuck(root);
-            return res;
-        }
-
-        private void Chuck(TreeNode node)
-        {
-            if (node == null)
+            ListNode resultListNode = null;
+            if (headA == null || headB == null)
             {
-                return;
+            }
+            else
+            {
+                var nodeA = headA;
+                var nodeB = headB;
+                while (nodeA != null || nodeB != null)
+                {
+                    if (nodeA == nodeB)
+                    {
+                        resultListNode = nodeA;
+                        break;
+                    }
+                    else
+                    {
+                        if (nodeA == null)
+                        {
+                            nodeA = nodeB;
+                        }
+
+                        if (nodeB == null)
+                        {
+                            nodeB = nodeA;
+                        }
+                        nodeA = nodeA.next;
+                        nodeB = nodeB.next;
+                    }
+                }
             }
 
-            Chuck(node.left);
-            Output.WriteLine($"prev = {pre}");
-            if (pre != -1)
-            {
-                int delta = node.val - pre;
-                Output.WriteLine($"{node.val} - {pre} = {delta}");
-                res = Math.Min(res, delta);
-            }
-
-            pre = node.val;
-            Chuck(node.right);
+            return resultListNode;
         }
 
         private void WriteTreeNode(TreeNode node)
@@ -86,13 +93,6 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(5);
-                TreeNode node2 = new TreeNode(4);
-                TreeNode node3 = new TreeNode(7);
-                node1.left = node2;
-                node1.right = node3;
-                int temp = GetMinimumDifference(node1);
-                Output.WriteLine(temp.ToString());
             }
             catch (Exception ex)
             {
@@ -105,19 +105,6 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(236);
-                TreeNode node2 = new TreeNode(104);
-                TreeNode node3 = new TreeNode(701);
-                node1.left = node2;
-                node1.right = node3;
-
-                TreeNode node4 = new TreeNode(227);
-                node2.right = node4;
-                TreeNode node5 = new TreeNode(911);
-                node3.right = node5;
-
-                int temp = GetMinimumDifference(node1);
-                Output.WriteLine(temp.ToString());
             }
             catch (Exception ex)
             {

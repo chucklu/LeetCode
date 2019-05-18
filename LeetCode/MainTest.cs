@@ -32,6 +32,8 @@ namespace LeetCode
                     }
                     else
                     {
+                        nodeA = nodeA.next;
+                        nodeB = nodeB.next;
                         if (nodeA == null)
                         {
                             nodeA = nodeB;
@@ -41,8 +43,6 @@ namespace LeetCode
                         {
                             nodeB = nodeA;
                         }
-                        nodeA = nodeA.next;
-                        nodeB = nodeB.next;
                     }
                 }
             }

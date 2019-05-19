@@ -23,7 +23,7 @@ namespace LeetCode
             {
                 var nodeA = headA;
                 var nodeB = headB;
-                while (nodeA != null || nodeB != null)
+                while (true)
                 {
                     if (nodeA == nodeB)
                     {
@@ -36,12 +36,12 @@ namespace LeetCode
                         nodeB = nodeB.next;
                         if (nodeA == null)
                         {
-                            nodeA = nodeB;
+                            nodeA = headB;
                         }
 
                         if (nodeB == null)
                         {
-                            nodeB = nodeA;
+                            nodeB = headA;
                         }
                     }
                 }

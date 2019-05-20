@@ -124,6 +124,18 @@ namespace LeetCode
         {
             try
             {
+                ListNode node1 = new ListNode(2);
+                ListNode node2 = new ListNode(6);
+                ListNode node3 = new ListNode(4);
+                node1.next = node2;
+                node2.next = node3;
+
+                ListNode node4 = new ListNode(1);
+                ListNode node5 = new ListNode(5);
+                node4.next = node5;
+
+                var resultNode = GetIntersectionNode(node1, node4);
+                Output.WriteLine(resultNode.val.ToString());
             }
             catch (Exception ex)
             {

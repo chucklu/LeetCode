@@ -15,6 +15,8 @@ namespace LeetCode
 
         public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
         {
+            bool resetA = false;
+            bool resetB = false;
             ListNode resultListNode = null;
             if (headA == null || headB == null)
             {
@@ -34,14 +36,16 @@ namespace LeetCode
                     {
                         nodeA = nodeA.next;
                         nodeB = nodeB.next;
-                        if (nodeA == null)
+                        if (nodeA == null && !resetA)
                         {
                             nodeA = headB;
+                            resetA = true;
                         }
 
-                        if (nodeB == null)
+                        if (nodeB == null && !resetB)
                         {
                             nodeB = headA;
+                            resetB = true;
                         }
                     }
                 }

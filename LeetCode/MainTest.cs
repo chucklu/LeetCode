@@ -6,53 +6,44 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/intersection-of-two-linked-lists/
+    //https://leetcode.com/problems/convert-bst-to-greater-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        public TreeNode ConvertBST(TreeNode root)
         {
-            bool resetA = false;
-            bool resetB = false;
-            ListNode resultListNode = null;
-            if (headA == null || headB == null)
+            if (root == null)
             {
+                return null;
+            }
+
+            int sum = 0;
+            Chuck(root,ref sum);
+            return root;
+        }
+
+        private void Chuck(TreeNode node,ref int sum)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            sum = sum + node.val;
+            if (node.left == null && node.right == null)
+            {
+                node.val = sum;
             }
             else
             {
-                var nodeA = headA;
-                var nodeB = headB;
-                while (true)
-                {
-                    if (nodeA == nodeB)
-                    {
-                        resultListNode = nodeA;
-                        break;
-                    }
-                    else
-                    {
-                        nodeA = nodeA.next;
-                        nodeB = nodeB.next;
-                        if (nodeA == null && !resetA)
-                        {
-                            nodeA = headB;
-                            resetA = true;
-                        }
-
-                        if (nodeB == null && !resetB)
-                        {
-                            nodeB = headA;
-                            resetB = true;
-                        }
-                    }
-                }
+                Chuck(node.right,ref sum);
+                Chuck(node.left,ref sum);
             }
-
-            return resultListNode;
         }
+    
 
         private void WriteTreeNode(TreeNode node)
         {
@@ -97,25 +88,7 @@ namespace LeetCode
         {
             try
             {
-                ListNode node1 = new ListNode(4);
-                ListNode node2 = new ListNode(1);
-                node1.next = node2;
-                ListNode node3 = new ListNode(8);
-                node2.next = node3;
-                ListNode node4 = new ListNode(4);
-                node3.next = node4;
-                ListNode node5 = new ListNode(5);
-                node4.next = node5;
-
-                ListNode node6 = new ListNode(5);
-                ListNode node7 = new ListNode(0);
-                node6.next = node7;
-                ListNode node8 = new ListNode(1);
-                node7.next = node8;
-                node8.next = node3;
-
-                var resultNode = GetIntersectionNode(node1, node6);
-                Output.WriteLine(resultNode.val.ToString());
+                
             }
             catch (Exception ex)
             {
@@ -128,18 +101,6 @@ namespace LeetCode
         {
             try
             {
-                ListNode node1 = new ListNode(2);
-                ListNode node2 = new ListNode(6);
-                ListNode node3 = new ListNode(4);
-                node1.next = node2;
-                node2.next = node3;
-
-                ListNode node4 = new ListNode(1);
-                ListNode node5 = new ListNode(5);
-                node4.next = node5;
-
-                var resultNode = GetIntersectionNode(node1, node4);
-                Output.WriteLine(resultNode.val.ToString());
             }
             catch (Exception ex)
             {

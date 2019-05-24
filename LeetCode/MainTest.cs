@@ -88,7 +88,13 @@ namespace LeetCode
         {
             try
             {
-                
+                TreeNode node1 = new TreeNode(5);
+                TreeNode node2 = new TreeNode(2);
+                TreeNode node3 = new TreeNode(13);
+                node1.left = node2;
+                node1.right = node3;
+                var result = ConvertBST(node1);
+                WriteTreeNode(result);
             }
             catch (Exception ex)
             {

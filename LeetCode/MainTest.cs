@@ -21,29 +21,23 @@ namespace LeetCode
             }
 
             int sum = 0;
-            Chuck(root,ref sum);
+            Chuck(root, ref sum);
             return root;
         }
 
-        private void Chuck(TreeNode node,ref int sum)
+        private void Chuck(TreeNode node, ref int sum)
         {
             if (node == null)
             {
                 return;
             }
 
+            Chuck(node.right, ref sum);
             sum = sum + node.val;
-            if (node.left == null && node.right == null)
-            {
-                node.val = sum;
-            }
-            else
-            {
-                Chuck(node.right,ref sum);
-                Chuck(node.left,ref sum);
-            }
+            node.val = sum;
+            Chuck(node.left, ref sum);
         }
-    
+
 
         private void WriteTreeNode(TreeNode node)
         {

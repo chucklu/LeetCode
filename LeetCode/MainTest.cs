@@ -6,23 +6,18 @@ using Xunit.Abstractions;
 namespace LeetCode
 {
 
-    //https://leetcode.com/problems/convert-bst-to-greater-tree/
+    //https://leetcode.com/problems/diameter-of-binary-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
         {
         }
 
-        public TreeNode ConvertBST(TreeNode root)
+        public int DiameterOfBinaryTree(TreeNode root)
         {
-            if (root == null)
-            {
-                return null;
-            }
-
             int sum = 0;
             Chuck(root, ref sum);
-            return root;
+            return sum;
         }
 
         private void Chuck(TreeNode node, ref int sum)
@@ -82,13 +77,7 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(5);
-                TreeNode node2 = new TreeNode(2);
-                TreeNode node3 = new TreeNode(13);
-                node1.left = node2;
-                node1.right = node3;
-                var result = ConvertBST(node1);
-                WriteTreeNode(result);
+               
             }
             catch (Exception ex)
             {

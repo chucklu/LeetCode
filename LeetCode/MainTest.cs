@@ -13,24 +13,35 @@ namespace LeetCode
         {
         }
 
+        private int _result;
+
         public int DiameterOfBinaryTree(TreeNode root)
         {
-            int sum = 0;
-            Chuck(root, ref sum);
-            return sum;
+            Chuck(root);
+            return _result;
         }
 
-        private void Chuck(TreeNode node, ref int sum)
+        private int Chuck(TreeNode node)
         {
             if (node == null)
             {
-                return;
+                return 0;
             }
 
-            Chuck(node.right, ref sum);
-            sum = sum + node.val;
-            node.val = sum;
-            Chuck(node.left, ref sum);
+            int leftDepth = 0;
+            int rightDepth = 0;
+            if (node.left != null)
+            {
+                leftDepth = 1 + Chuck(node.left);
+            }
+
+            if (node.right != null)
+            {
+                rightDepth = 1 + Chuck(node.right);
+            }
+
+            _result = Math.Max(_result, leftDepth + rightDepth - 1);
+            return Math.Max(leftDepth, rightDepth);
         }
 
 
@@ -77,7 +88,19 @@ namespace LeetCode
         {
             try
             {
-               
+                TreeNode node1 = new TreeNode(1);
+                TreeNode node2 = new TreeNode(2);
+                TreeNode node3 = new TreeNode(3);
+                TreeNode node4 = new TreeNode(4);
+                TreeNode node5 = new TreeNode(5);
+                node1.left = node2;
+                node2.left = node4;
+                node2.right = node5;
+                node1.right = node3;
+
+                int result = DiameterOfBinaryTree(node1);
+                Output.WriteLine(result.ToString());
+
             }
             catch (Exception ex)
             {

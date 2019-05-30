@@ -13,12 +13,12 @@ namespace LeetCode
         {
         }
 
-        private int _result;
+        private int _result = 1;
 
         public int DiameterOfBinaryTree(TreeNode root)
         {
             Chuck(root);
-            return _result;
+            return _result - 1;
         }
 
         private int Chuck(TreeNode node)
@@ -40,7 +40,7 @@ namespace LeetCode
                 rightDepth = 1 + Chuck(node.right);
             }
 
-            _result = Math.Max(_result, leftDepth + rightDepth - 1);
+            _result = Math.Max(_result, leftDepth + rightDepth + 1);
             return Math.Max(leftDepth, rightDepth);
         }
 

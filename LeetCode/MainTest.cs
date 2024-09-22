@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -18,20 +19,14 @@ namespace LeetCode
             Dictionary<int, int> dic = new Dictionary<int, int>();
             for (int i = 0; i < nums.Length; i++)
             {
-                dic.Add(i, nums[i]);
-            }
-            for(int i = 0; i < nums.Length; i++)
-            {
                 var delta = target - nums[i];
-                if (dic.ContainsValues(delta))
+                if (dic.ContainsKey(delta))
                 {
-                    for(int j = 0; j++; j < nums.Length)
-                    {
-                        if (delta == dic[j])
-                        {
-                            return new int[] { i, j };
-                        }
-                    }
+                    return new int[] { i, dic[delta] };
+                }
+                else
+                {
+                    dic[nums[i]] = i;
                 }
             }
             return new int[] { };

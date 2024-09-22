@@ -13,74 +13,28 @@ namespace LeetCode
         {
         }
 
-        private int _result = 1;
-
-        public int DiameterOfBinaryTree(TreeNode root)
+        public int[] TwoSum(int[] nums, int target)
         {
-            Chuck(root);
-            return _result - 1;
-        }
-
-        private int Chuck(TreeNode node)
-        {
-            if (node == null)
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
             {
-                return 0;
+                dic.Add(i, nums[i]);
             }
-
-            int leftDepth = 0;
-            int rightDepth = 0;
-            if (node.left != null)
+            for(int i = 0; i < nums.Length; i++)
             {
-                leftDepth = 1 + Chuck(node.left);
+                var delta = target - nums[i];
+                if (dic.ContainsValues(delta))
+                {
+                    for(int j = 0; j++; j < nums.Length)
+                    {
+                        if (delta == dic[j])
+                        {
+                            return new int[] { i, j };
+                        }
+                    }
+                }
             }
-
-            if (node.right != null)
-            {
-                rightDepth = 1 + Chuck(node.right);
-            }
-
-            _result = Math.Max(_result, leftDepth + rightDepth + 1);
-            return Math.Max(leftDepth, rightDepth);
-        }
-
-
-        private void WriteTreeNode(TreeNode node)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            if (node == null)
-            {
-                Output.WriteLine("node is null");
-                return;
-            }
-
-            stringBuilder.Append($"node is {node.val}");
-            if (node.left == null)
-            {
-                stringBuilder.Append(", node.left is null");
-            }
-            else
-            {
-                stringBuilder.Append($", node.left is {node.left.val}");
-            }
-            if (node.right == null)
-            {
-                stringBuilder.Append(", node.right is null");
-            }
-            else
-            {
-                stringBuilder.Append($", node.right is {node.right.val}");
-            }
-            Output.WriteLine(stringBuilder.ToString());
-
-            if (node.left != null)
-            {
-                WriteTreeNode(node.left);
-            }
-            if (node.right != null)
-            {
-                WriteTreeNode(node.right);
-            }
+            return new int[] { };
         }
 
         [Fact]
@@ -88,18 +42,6 @@ namespace LeetCode
         {
             try
             {
-                TreeNode node1 = new TreeNode(1);
-                TreeNode node2 = new TreeNode(2);
-                TreeNode node3 = new TreeNode(3);
-                TreeNode node4 = new TreeNode(4);
-                TreeNode node5 = new TreeNode(5);
-                node1.left = node2;
-                node2.left = node4;
-                node2.right = node5;
-                node1.right = node3;
-
-                int result = DiameterOfBinaryTree(node1);
-                Output.WriteLine(result.ToString());
 
             }
             catch (Exception ex)

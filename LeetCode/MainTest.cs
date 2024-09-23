@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
+using System.Linq;
 
 namespace LeetCode
 {
@@ -12,19 +13,49 @@ namespace LeetCode
         {
         }
 
-        public int[] TwoSum(int[] nums, int target)
+        public bool IsPalindrome(string s)
         {
-            Dictionary<int, int> dic = new Dictionary<int, int>(nums.Length);
-            for (int i = 0; i < nums.Length; i++)
+            string temp = "abcdefghijklmnopqrstuvwxyz0123456789";
+            s = s.ToLowerInvariant();
+            int i = 0;
+            int j = s.Length - 1;
+            bool result = true;
+            while (i < j)
             {
-                var delta = target - nums[i];
-                if (dic.ContainsKey(delta))
+                while (i < j)
                 {
-                    return new int[] { i, dic[delta] };
+                    if (!temp.Contains(s[i]))
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                dic[nums[i]] = i;
+                while (i < j)
+                {
+                    if (!temp.Contains(s[j]))
+                    {
+                        j--;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (s[i] == s[j])
+                {
+                    i++;
+                    j--;
+                }
+                else
+                {
+                    result = false;
+                    break;
+                }
             }
-            return new int[] { };
+            return result;
         }
 
         [Fact]
@@ -32,10 +63,9 @@ namespace LeetCode
         {
             try
             {
-                var nums = new int[] { 2, 7, 11, 15 };
-                var target = 9;
-                var result = TwoSum(nums, target);
-                Output.WriteLine(string.Join(",", result));
+                var str = "A man, a plan, a canal: Panama";
+                var result = IsPalindrome(str);
+                Output.WriteLine($"result = {result}");
             }
             catch (Exception ex)
             {

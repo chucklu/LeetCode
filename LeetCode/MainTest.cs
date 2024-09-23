@@ -6,8 +6,6 @@ using Xunit.Abstractions;
 
 namespace LeetCode
 {
-
-    //https://leetcode.com/problems/diameter-of-binary-tree/
     public class MainTest : BaseTest
     {
         public MainTest(ITestOutputHelper helper) : base(helper)
@@ -34,7 +32,10 @@ namespace LeetCode
         {
             try
             {
-
+                var nums = new int[] { 2, 7, 11, 15 };
+                var target = 9;
+                var result = TwoSum(nums, target);
+                Output.WriteLine(string.Join(",", result));
             }
             catch (Exception ex)
             {

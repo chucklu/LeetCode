@@ -1,33 +1,17 @@
-public class Solution {
-    public int[] TwoSum(int[] nums, int target) {
-         List<Tuple<int, int>> list = new List<Tuple<int, int>>();
-            for (int i = 0; i < nums.Length; i++)
+public class Solution
+{
+    public int[] TwoSum(int[] nums, int target)
+    {
+        Dictionary<int, int> dic = new Dictionary<int, int>(nums.Length);
+        for (int i = 0; i < nums.Length; i++)
+        {
+            var delta = target - nums[i];
+            if (dic.ContainsKey(delta))
             {
-                list.Add(new Tuple<int, int>(i, nums[i]));
+                return new int[] { i, dic[delta] };
             }
-
-            list.Sort((a, b) => a.Item2.CompareTo(b.Item2));
-            int headerIndex = 0;
-            int tailIndex = nums.Length - 1;
-            while (headerIndex < tailIndex)
-            {
-                if (list[headerIndex].Item2 + list[tailIndex].Item2 == target)
-                {
-                    break;
-                }
-                else if (list[headerIndex].Item2 + list[tailIndex].Item2 > target)
-                {
-                    tailIndex--;
-                }
-                else
-                {
-                    headerIndex++;
-                }
-            }
-
-            int[] result = new int[2];
-            result[0] = list[headerIndex].Item1;
-            result[1] = list[tailIndex].Item1;
-            return result;
+            dic[nums[i]] = i;
+        }
+        return new int[] { };
     }
 }

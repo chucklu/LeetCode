@@ -13,29 +13,43 @@ namespace LeetCode
         {
         }
 
-        public bool IsPalindrome(string s)
+        public bool FindTarget(TreeNode root, int k)
         {
-            s = s.ToLowerInvariant();
+            List<int> list = new List<int>();
+            IterateBinaryTree(root, list);
+            list.Sort();
+            var array = list.ToArray();
+
             int i = 0;
-            int j = s.Length - 1;
+            int j = array.Length - 1;
             while (i < j)
             {
-                while (i < j && !char.IsLetterOrDigit(s[i]))
+                if (array[i] + array[j] == k)
                 {
-                    i++;
+                    return true;
                 }
-                while (i < j && !char.IsLetterOrDigit(s[j]))
+                if (array[i] + array[j] > k)
                 {
                     j--;
                 }
-                if (s[i] != s[j])
+                else
                 {
-                    return false;
+                    i++;
                 }
-                i++;
-                j--;
             }
-            return true;
+            return false;
+        }
+
+        private static void IterateBinaryTree(TreeNode node, List<int> list)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            list.Add(node.val);
+            IterateBinaryTree(node.left, list);
+            IterateBinaryTree(node.right, list);
         }
 
         [Fact]
@@ -43,9 +57,20 @@ namespace LeetCode
         {
             try
             {
-                var str = "A man, a plan, a canal: Panama";
-                var result = IsPalindrome(str);
-                Output.WriteLine($"result = {result}");
+                TreeNode root = new TreeNode(5);
+                root.left = new TreeNode(3);
+                root.right = new TreeNode(6);
+                root.left.left = new TreeNode(2);
+                root.left.right = new TreeNode(4);
+                root.right.right = new TreeNode(7);
+                bool flag = FindTarget(root, 9);
+                Output.WriteLine(flag.ToString());
+
+                root = new TreeNode(2);
+                root.left = new TreeNode(1);
+                root.right = new TreeNode(3);
+                flag = FindTarget(root, 4);
+                Output.WriteLine(flag.ToString());
             }
             catch (Exception ex)
             {

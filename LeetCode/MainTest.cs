@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace LeetCode
 {
@@ -15,41 +16,24 @@ namespace LeetCode
 
         public bool FindTarget(TreeNode root, int k)
         {
-            List<int> list = new List<int>();
-            InOrderTraversal(root, list);
-
-            int i = 0;
-            int j = list.Count - 1;
-            while (i < j)
-            {
-                int sum = list[i] + list[j];
-                if (sum == k)
-                {
-                    return true;
-                }
-                if (sum > k)
-                {
-                    j--;
-                }
-                else
-                {
-                    i++;
-                }
-            }
-            return false;
+            HashSet<int> set = new HashSet<int>();
+            return Find(root, k, set);
         }
 
-        private void InOrderTraversal(TreeNode node, List<int> list)
+        private bool Find(TreeNode node, int k , HashSet<int> set)
         {
             if (node == null)
             {
-                return;
+                return false;
             }
-
-            // In-order traversal: Left, Root, Right
-            InOrderTraversal(node.left, list);
-            list.Add(node.val);
-            InOrderTraversal(node.right, list);
+            Output.WriteLine($"node = {node.val}, node.left = {node.left?.val}, node.right = {node.right?.val},");
+            var delta = k - node.val;
+            if (set.Contains(delta))
+            {
+                return true;
+            }
+            set.Add(node.val);
+            return Find(node.left, k, set) || Find(node.right, k, set);
         }
 
         [Fact]
@@ -57,6 +41,7 @@ namespace LeetCode
         {
             try
             {
+                Output.WriteLine($"===first test case===");
                 TreeNode root = new TreeNode(5);
                 root.left = new TreeNode(3);
                 root.right = new TreeNode(6);
@@ -66,6 +51,7 @@ namespace LeetCode
                 bool flag = FindTarget(root, 9);
                 Assert.True(flag);
 
+                Output.WriteLine($"===second test case===");
                 root = new TreeNode(2);
                 root.left = new TreeNode(1);
                 root.right = new TreeNode(3);

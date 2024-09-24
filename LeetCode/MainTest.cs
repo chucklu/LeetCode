@@ -39,42 +39,27 @@ namespace LeetCode
         [Fact]
         public void Test()
         {
-            try
-            {
-                Output.WriteLine($"===first test case===");
-                TreeNode root = new TreeNode(5);
-                root.left = new TreeNode(3);
-                root.right = new TreeNode(6);
-                root.left.left = new TreeNode(2);
-                root.left.right = new TreeNode(4);
-                root.right.right = new TreeNode(7);
-                bool flag = FindTarget(root, 9);
-                Assert.True(flag);
-
-                Output.WriteLine($"===second test case===");
-                root = new TreeNode(2);
-                root.left = new TreeNode(1);
-                root.right = new TreeNode(3);
-                flag = FindTarget(root, 4);
-                Assert.True(flag);
-
-            }
-            catch (Exception ex)
-            {
-                Output.WriteLine(ex.ToString());
-            }
+            Output.WriteLine($"===first test case===");
+            TreeNode root = new TreeNode(5);
+            root.left = new TreeNode(3);
+            root.right = new TreeNode(6);
+            root.left.left = new TreeNode(2);
+            root.left.right = new TreeNode(4);
+            root.right.right = new TreeNode(7);
+            bool flag = FindTarget(root, 100);
+            Assert.True(flag);
         }
 
         [Fact]
         public void Test2()
         {
-            try
-            {
-            }
-            catch (Exception ex)
-            {
-                Output.WriteLine(ex.ToString());
-            }
+            TreeNode root;
+            Output.WriteLine($"===second test case===");
+            root = new TreeNode(2);
+            root.left = new TreeNode(1);
+            root.right = new TreeNode(3);
+            bool flag = FindTarget(root, 4);
+            Assert.True(flag);
         }
     }
 }

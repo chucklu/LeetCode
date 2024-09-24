@@ -16,19 +16,18 @@ namespace LeetCode
         public bool FindTarget(TreeNode root, int k)
         {
             List<int> list = new List<int>();
-            IterateBinaryTree(root, list);
-            list.Sort();
-            var array = list.ToArray();
+            InOrderTraversal(root, list);
 
             int i = 0;
-            int j = array.Length - 1;
+            int j = list.Count - 1;
             while (i < j)
             {
-                if (array[i] + array[j] == k)
+                int sum = list[i] + list[j];
+                if (sum == k)
                 {
                     return true;
                 }
-                if (array[i] + array[j] > k)
+                if (sum > k)
                 {
                     j--;
                 }
@@ -40,16 +39,17 @@ namespace LeetCode
             return false;
         }
 
-        private static void IterateBinaryTree(TreeNode node, List<int> list)
+        private void InOrderTraversal(TreeNode node, List<int> list)
         {
             if (node == null)
             {
                 return;
             }
 
+            // In-order traversal: Left, Root, Right
+            InOrderTraversal(node.left, list);
             list.Add(node.val);
-            IterateBinaryTree(node.left, list);
-            IterateBinaryTree(node.right, list);
+            InOrderTraversal(node.right, list);
         }
 
         [Fact]
@@ -64,13 +64,14 @@ namespace LeetCode
                 root.left.right = new TreeNode(4);
                 root.right.right = new TreeNode(7);
                 bool flag = FindTarget(root, 9);
-                Output.WriteLine(flag.ToString());
+                Assert.True(flag);
 
                 root = new TreeNode(2);
                 root.left = new TreeNode(1);
                 root.right = new TreeNode(3);
                 flag = FindTarget(root, 4);
-                Output.WriteLine(flag.ToString());
+                Assert.True(flag);
+
             }
             catch (Exception ex)
             {

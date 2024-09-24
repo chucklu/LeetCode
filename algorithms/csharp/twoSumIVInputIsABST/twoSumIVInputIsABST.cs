@@ -61,3 +61,27 @@ public class Solution
     }
 }
 
+public class Solution
+{
+    public bool FindTarget(TreeNode root, int k)
+    {
+        HashSet<int> set = new HashSet<int>();
+        return Find(root, k, set);
+    }
+
+    private bool Find(TreeNode node, int k, HashSet<int> set)
+    {
+        if (node == null)
+        {
+            return false;
+        }
+        var delta = k - node.val;
+        if (set.Contains(delta))
+        {
+            return true;
+        }
+        set.Add(node.val);
+        return Find(node.left, k, set) || Find(node.right, k, set);
+    }
+}
+

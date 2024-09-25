@@ -14,56 +14,63 @@ namespace LeetCode
         {
         }
 
-        public bool FindTarget(TreeNode root, int k)
+        public int RemoveDuplicates(int[] nums)
         {
-            HashSet<int> set = new HashSet<int>();
-            return Find(root, k, set);
-        }
+            if (nums == null)
+            {
+                return 0;
+            }
+            if (nums.Length == 0)
+            {
+                return 0;
+            }
+            if (nums.Length == 1)
+            {
+                return 1;
+            }
 
-        private bool Find(TreeNode node, int k , HashSet<int> set)
-        {
-            if (node == null)
+            int i = 0;
+            int j = i + 1;
+            while (j < nums.Length)
             {
-                return false;
+                if (nums[i] == nums[j])
+                {
+                    j++;
+                    if (j >= nums.Length)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    i++;
+                    if (i >= nums.Length)
+                    {
+                        break;
+                    }
+                    if (j >= nums.Length)
+                    {
+                        break;
+                    }
+                    nums[i] = nums[j];
+                    j++;
+                }
             }
-            Output.WriteLine($"node = {node.val}, node.left = {node.left?.val}, node.right = {node.right?.val},");
-            var delta = k - node.val;
-            if (set.Contains(delta))
-            {
-                return true;
-            }
-            set.Add(node.val);
-            return Find(node.left, k, set) || Find(node.right, k, set);
+
+            return i + 1;
         }
 
         [Fact]
         public void Test()
         {
-            Output.WriteLine($"===first test case===");
-            var node1 = new TreeNode(1);
-
-            var node2 = new TreeNode(2, node1);
-            var node4 = new TreeNode(4);
-            var node7 = new TreeNode(7);
-
-            var node3 = new TreeNode(3, node2, node4);
-            var node6 = new TreeNode(6, null, node7);
-
-            var node5 = new TreeNode(5, node3, node6);
-            bool flag = FindTarget(node5, 13);
-            Assert.True(flag);
+            int[] array = { 1, 1, };
+            var result = RemoveDuplicates(array);
+            Output.WriteLine(result.ToString());
         }
 
         [Fact]
         public void Test2()
         {
-            Output.WriteLine($"===second test case===");
-            var node1 = new TreeNode(1);
-            var node3 = new TreeNode(3);
-
-            var node2 = new TreeNode(2, node1, node3);
-            bool flag = FindTarget(node2, 4);
-            Assert.True(flag);
         }
     }
 }

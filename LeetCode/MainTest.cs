@@ -33,28 +33,12 @@ namespace LeetCode
             int j = i + 1;
             while (j < nums.Length)
             {
-                if (nums[i] == nums[j])
-                {
-                    j++;
-                    if (j >= nums.Length)
-                    {
-                        break;
-                    }
-                }
-                else
+                if (nums[i] != nums[j])
                 {
                     i++;
-                    if (i >= nums.Length)
-                    {
-                        break;
-                    }
-                    if (j >= nums.Length)
-                    {
-                        break;
-                    }
                     nums[i] = nums[j];
-                    j++;
                 }
+                j++;
             }
 
             return i + 1;
@@ -63,7 +47,7 @@ namespace LeetCode
         [Fact]
         public void Test()
         {
-            int[] array = { 1, 1, };
+            int[] array = { 1, 1, 2 };
             var result = RemoveDuplicates(array);
             Output.WriteLine(result.ToString());
         }

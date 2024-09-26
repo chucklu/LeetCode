@@ -4,21 +4,17 @@ public class Solution
 {
     public ListNode ReverseList(ListNode head)
     {
-        ListNode current = head;
-        ListNode next = current?.next;
-        if (next != null)
-        {
-            head.next = null;
-        }
-        while (next != null)
-        {
-            ListNode next2 = next.next;
-            next.next = current;
+        ListNode prev = null;       // This will be the new tail of the list (starting as null)
+        ListNode current = head;    // Start with the head of the list
 
-            current = next;
-            next = next2;
+        while (current != null)
+        {
+            ListNode next = current.next; // Save the next node
+            current.next = prev;          // Reverse the pointer
+            prev = current;               // Move prev to current
+            current = next;               // Move current to the next node
         }
 
-        return current;
+        return prev; // At the end, prev will be the new head of the reversed list
     }
 }

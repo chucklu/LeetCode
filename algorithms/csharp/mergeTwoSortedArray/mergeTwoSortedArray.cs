@@ -1,20 +1,8 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
-using System.Linq;
-using System.Xml.Linq;
+//https://leetcode.com/problems/merge-sorted-array/
 
-namespace LeetCode
+public class Solution
 {
-    public class MainTest : BaseTest
-    {
-        public MainTest(ITestOutputHelper helper) : base(helper)
-        {
-        }
-
-        public void Merge(int[] nums1, int m, int[] nums2, int n)
+    public void Merge(int[] nums1, int m, int[] nums2, int n)
         {
             int i = m - 1;
             int j = n - 1;
@@ -48,15 +36,4 @@ namespace LeetCode
                 j--;
             }
         }
-
-        [Fact]
-        public void Test()
-        {
-        }
-
-        [Fact]
-        public void Test2()
-        {
-        }
-    }
 }

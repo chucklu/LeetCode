@@ -4,23 +4,23 @@ public class Solution
 {
     public int RemoveElement(int[] nums, int val)
     {
-        int i = 0;
-        int j = nums.Length - 1;
+        int i = 0; // Pointer to place the next non-val element
+        int j = nums.Length - 1; // Pointer to the end of the array
+
         while (i <= j)
         {
-            if (nums[i] != val)
+            if (nums[i] == val)
             {
-                i++;
+                // Swap the current element with the last element
+                nums[i] = nums[j];
+                j--; // Reduce the end pointer
             }
             else
             {
-                //in this case,i is not added
-                //in next loop, it will check value nums[j], which was set to nums[i]
-                nums[i] = nums[j];
-                j--;
+                i++; // Move forward if the current element is not val
             }
         }
 
-        return j + 1;
+        return i;
     }
 }

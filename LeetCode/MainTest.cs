@@ -14,45 +14,45 @@ namespace LeetCode
         {
         }
 
-        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        public ListNode ReverseList(ListNode head)
         {
-            int i = m - 1;
-            int j = n - 1;
-            int k = m + n - 1;
-            while (i >= 0 && j >= 0)
+            ListNode prev = null;
+            ListNode current = head;
+            ListNode next = null;
+            while (current != null)
             {
-                if (nums1[i] > nums2[j])
-                {
-                    nums1[k] = nums1[i];
-                    i--;
-                }
-                else
-                {
-                    nums1[k] = nums2[j];
-                    j--;
-                }
-
-                k--;
+                next = current.next;   // Save the next node
+                current.next = prev;   // Reverse the link
+                prev = current;        // Move prev one step ahead
+                current = next;        // Move current one step ahead
             }
-
-            while (i >= 0)
-            {
-                nums1[k] = nums1[i];
-                k--;
-                i--;
-            }
-            while (j >= 0)
-            {
-                nums1[k] = nums2[j];
-                k--;
-                j--;
-            }
+            return prev;
         }
 
         [Fact]
         public void Test()
         {
+            // Creating the nodes
+            ListNode node1 = new ListNode(1);
+            ListNode node2 = new ListNode(2);
+            ListNode node3 = new ListNode(3);
+            ListNode node4 = new ListNode(4);
+
+            // Linking the nodes
+            node1.next = node2;
+            node2.next = node3;
+            node3.next = node4;
+
+            // Head of the list points to node1
+            ListNode head = node1;
+
+            ListNodeHelper.PrintList(head);
+
+            var reverseList = ReverseList(head);
+            ListNodeHelper.PrintList(reverseList);
         }
+
+
 
         [Fact]
         public void Test2()

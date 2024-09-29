@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
 using System.Linq;
 using System.Xml.Linq;
+using NUnit.Framework;
 
 namespace LeetCode
 {
-    public class MainTest : BaseTest
+    [TestFixture]
+    public class MainTest
     {
-        public MainTest(ITestOutputHelper helper) : base(helper)
-        {
-        }
-
         public ListNode ReverseList(ListNode head)
         {
             ListNode prev = null;
@@ -29,7 +25,7 @@ namespace LeetCode
             return prev;
         }
 
-        [Fact]
+        [Test]
         public void Test()
         {
             // Creating the nodes
@@ -54,7 +50,7 @@ namespace LeetCode
 
 
 
-        [Fact]
+        [Test]
         public void Test2()
         {
         }

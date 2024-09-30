@@ -28,6 +28,20 @@ namespace LeetCode
             return prev;
         }
 
+        public ListNode ReverseList2(ListNode head)
+        {
+            ListNode newHead = null;
+            while (head != null)
+            {
+                var next = head.next;
+                head.next = newHead;
+                newHead = head;
+                head = next; 
+                ListNodeHelper.PrintList(newHead);
+            }
+            return newHead;
+        }
+
         [Test]
         public void Test()
         {
@@ -47,7 +61,7 @@ namespace LeetCode
 
             ListNodeHelper.PrintList(head);
 
-            var reverseList = ReverseList(head);
+            var reverseList = ReverseList2(head);
             ListNodeHelper.PrintList(reverseList);
         }
 

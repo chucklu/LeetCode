@@ -43,19 +43,35 @@ namespace LeetCode
             return newHead;
         }
 
+        private static ListNode Head;
+
         public ListNode ReverseList3(ListNode head)
         {
             var next = head?.next;
             if (head == null || next == null)
             {
+                Console.WriteLine($"Base case: returning {(head == null ? "null" : head.val.ToString())}");
                 return head;
             }
+            Console.WriteLine($"Before recursion: head = {head.val}, next = {next.val}");
             var temp = ReverseList3(next);
-            Console.WriteLine($"head = {head.val}, next = {next.val}");
+            Console.WriteLine($"After recursion: head = {head.val}, next = {next.val}");
             next.next = head;
             head.next = null;
-            Console.WriteLine($"temp = {temp.val}");
+            Console.WriteLine($"After reversal: temp = {temp.val}, current list = {ListToString(temp)}");
+            Console.WriteLine($"After reversal: original list = {ListToString(Head)}");
             return temp;
+        }
+
+        private string ListToString(ListNode node)
+        {
+            var result = new List<int>();
+            while (node != null)
+            {
+                result.Add(node.val);
+                node = node.next;
+            }
+            return string.Join(" -> ", result) + " -> null";
         }
 
         [Test]
@@ -74,6 +90,7 @@ namespace LeetCode
 
             // Head of the list points to node1
             ListNode head = node1;
+            Head= head;
 
             ListNodeHelper.PrintList(head);
 

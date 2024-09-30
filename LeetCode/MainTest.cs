@@ -14,14 +14,16 @@ namespace LeetCode
         {
             ListNode prev = null;
             ListNode current = head;
-            ListNode next = null;
+            ListNode next = head?.next;
             while (current != null)
             {
-                next = current.next;   // Save the next node
+                Console.WriteLine($"before reverse: prev = {prev?.val}, current = {current.val}, next = {next?.val}");
                 current.next = prev;   // Reverse the link
                 prev = current;        // Move prev one step ahead
                 current = next;        // Move current one step ahead
+                next = current?.next;   // Save the next node
             }
+            Console.WriteLine($"before reverse: prev = {prev?.val}, current = {current?.val}, next = {next?.val}");
             return prev;
         }
 

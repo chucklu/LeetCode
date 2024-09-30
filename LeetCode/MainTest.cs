@@ -21,7 +21,8 @@ namespace LeetCode
                 current.next = prev;   // Reverse the link
                 prev = current;        // Move prev one step ahead
                 current = next;        // Move current one step ahead
-                next = current?.next;   // Save the next node
+                next = current?.next;   // Save the next node  
+                ListNodeHelper.PrintList(prev);
             }
             Console.WriteLine($"before reverse: prev = {prev?.val}, current = {current?.val}, next = {next?.val}");
             return prev;

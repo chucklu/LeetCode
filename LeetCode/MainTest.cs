@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using NUnit.Framework;
+using System.Data.SqlTypes;
 
 namespace LeetCode
 {
@@ -42,6 +43,21 @@ namespace LeetCode
             return newHead;
         }
 
+        public ListNode ReverseList3(ListNode head)
+        {
+            var next = head?.next;
+            if (head == null || next == null)
+            {
+                return head;
+            }
+            var temp = ReverseList3(next);
+            Console.WriteLine($"head = {head.val}, next = {next.val}");
+            next.next = head;
+            head.next = null;
+            Console.WriteLine($"temp = {temp.val}");
+            return temp;
+        }
+
         [Test]
         public void Test()
         {
@@ -61,7 +77,7 @@ namespace LeetCode
 
             ListNodeHelper.PrintList(head);
 
-            var reverseList = ReverseList2(head);
+            var reverseList = ReverseList3(head);
             ListNodeHelper.PrintList(reverseList);
         }
 

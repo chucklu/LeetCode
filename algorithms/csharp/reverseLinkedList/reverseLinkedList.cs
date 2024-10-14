@@ -2,6 +2,7 @@
 
 public class Solution
 {
+	//三指针
     public ListNode ReverseList(ListNode head)
     {
         ListNode prev = null;       // This will be the new tail of the list (starting as null)
@@ -21,6 +22,7 @@ public class Solution
 
 public class Solution
 {
+	//头插法
     public ListNode ReverseList(ListNode head)
     {
         ListNode newHead = null;
@@ -32,5 +34,22 @@ public class Solution
             head = next;
         }
         return newHead;
+    }
+}
+
+public class Solution
+{
+	//递归法
+    public ListNode ReverseList(ListNode head)
+    {
+        var next = head?.next;
+        if (head == null || next == null)
+        {
+            return head;
+        }
+        var temp = ReverseList(next);
+        next.next = head;
+        head.next = null;
+        return temp;
     }
 }

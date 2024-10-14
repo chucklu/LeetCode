@@ -7,6 +7,7 @@ LeetCode
 | # | Title | Solution | Difficulty |
 |---| ----- | -------- | ---------- |
 |653|[Two Sum IV - Input is a BST](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/) | [C#](./algorithms/csharp/twoSumIVInputIsABST/twoSumIVInputIsABST.cs)|Easy|
+|283|[Move Zeroes](https://leetcode.com/problems/move-zeroes/)  | [C#](./algorithms/csharp/moveZeroes/moveZeroes.cs)|Easy|
 |234|[Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/)| [C#](./algorithms/csharp/palindromeLinkedList/PalindromeLinkedList.cs)|Easy|
 |206|[Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)| [C#](./algorithms/csharp/reverseLinkedList/reverseLinkedList.cs)|Easy|
 |141|[Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)| [C#](./algorithms/csharp/linkedListCycle/linkedListCycle.cs)|Medium

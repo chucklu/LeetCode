@@ -4,28 +4,19 @@ public class Solution
 {
     public void MoveZeroes(int[] nums)
     {
-        if (nums == null)
-        {
-            return;
-        }
-        int i = 0;
-        int length = nums.Length;
-        int counter = 0;
-        while (i < length)
+        int nonZero = 0;  // Pointer for non-zero elements
+
+        // Traverse the array
+        for (int i = 0; i < nums.Length; i++)
         {
             if (nums[i] != 0)
             {
-                nums[counter] = nums[i];
-                counter++;
+                // Swap non-zero element with element at nonZero pointer
+                int temp = nums[nonZero];
+                nums[nonZero] = nums[i];
+                nums[i] = temp;
+                nonZero++;
             }
-
-            i++;
-        }
-
-        while (counter < length)
-        {
-            nums[counter] = 0;
-            counter++;
         }
     }
 }

@@ -16,5 +16,6 @@ LeetCode
 |88|[Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)| [C#](./algorithms/csharp/mergeTwoSortedArray/mergeTwoSortedArray.cs)|Easy|
 |27|[Remove Element](https://leetcode.com/problems/remove-element/)| [C#](./algorithms/csharp/removeElement/removeElement.cs)|Easy|
 |26|[Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)| [C#](./algorithms/csharp/removeDuplicatesFromSortedArray/removeDuplicatesFromSortedArray.cs)|Easy|
+|21|[Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)| [C#](./algorithms/csharp/mergeTwoSortedList/mergeTwoSortedList.cs)|Easy|
 |11|[Container With Most Water](https://leetcode.com/problems/container-with-most-water/)| [C#](./algorithms/csharp/containerWithMostWater/containerWithMostWater.cs)|Medium|
 |1|[Two Sum](https://leetcode.com/problems/two-sum/)| [C#](./algorithms/csharp/twoSum/twoSum.cs)|Easy|
